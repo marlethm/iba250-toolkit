@@ -1,0 +1,744 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>IBA 250 — Born-Global AI Venture Toolkit</title>
+<meta name="robots" content="noindex, nofollow">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=Public+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --ink: #1c2333;
+    --ink-soft: #3c4560;
+    --muted: #6b7288;
+    --paper: #f5f2ea;
+    --paper-raised: #ffffff;
+    --line: #ddd6c4;
+    --accent: #2f4b7c;
+    --accent-soft: #e7ecf5;
+    --accent-2: #a97327;
+    --accent-2-soft: #f3e6d2;
+    --danger: #9a3b3b;
+    --shadow: 0 1px 2px rgba(28,35,51,0.06), 0 8px 24px rgba(28,35,51,0.06);
+    --radius: 10px;
+  }
+
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --ink: #ece8dc;
+      --ink-soft: #c7c2b2;
+      --muted: #93917f;
+      --paper: #14171f;
+      --paper-raised: #1b1f29;
+      --line: #313849;
+      --accent: #86a4de;
+      --accent-soft: #212a3f;
+      --accent-2: #d9a85c;
+      --accent-2-soft: #2c2416;
+      --danger: #d98b8b;
+      --shadow: 0 1px 2px rgba(0,0,0,0.3), 0 8px 24px rgba(0,0,0,0.35);
+    }
+  }
+
+  * { box-sizing: border-box; }
+
+  html, body {
+    margin: 0;
+    padding: 0;
+    background: var(--paper);
+    color: var(--ink);
+  }
+
+  body {
+    font-family: "Public Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    font-size: 16px;
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  h1, h2, h3 {
+    font-family: "Fraunces", Georgia, serif;
+    text-wrap: balance;
+    color: var(--ink);
+    margin: 0;
+  }
+
+  code, pre, .mono {
+    font-family: "IBM Plex Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
+  }
+
+  a { color: var(--accent); }
+
+  ::selection { background: var(--accent-soft); }
+
+  /* ---------- Password gate ---------- */
+
+  #gate {
+    position: fixed;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--paper);
+    z-index: 100;
+    padding: 24px;
+  }
+
+  .gate-card {
+    width: 100%;
+    max-width: 380px;
+    background: var(--paper-raised);
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    box-shadow: var(--shadow);
+    padding: 36px 32px 32px;
+    text-align: center;
+  }
+
+  .gate-mark {
+    width: 40px;
+    height: 40px;
+    margin: 0 auto 18px;
+    border-radius: 50%;
+    border: 1.5px solid var(--accent-2);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: "Fraunces", serif;
+    font-weight: 600;
+    font-size: 15px;
+    color: var(--accent-2);
+    letter-spacing: 0.02em;
+  }
+
+  .gate-card h1 {
+    font-size: 21px;
+    font-weight: 600;
+    margin-bottom: 6px;
+  }
+
+  .gate-card p.gate-sub {
+    color: var(--muted);
+    font-size: 14px;
+    margin: 0 0 24px;
+  }
+
+  #gate form {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  #gate input[type="password"] {
+    font: inherit;
+    font-size: 15px;
+    padding: 11px 14px;
+    border-radius: 8px;
+    border: 1px solid var(--line);
+    background: var(--paper);
+    color: var(--ink);
+    text-align: center;
+    letter-spacing: 0.02em;
+  }
+
+  #gate input[type="password"]:focus {
+    outline: 2px solid var(--accent);
+    outline-offset: 1px;
+  }
+
+  #gate button {
+    font: inherit;
+    font-size: 15px;
+    font-weight: 600;
+    padding: 11px 14px;
+    border-radius: 8px;
+    border: none;
+    background: var(--accent);
+    color: var(--paper-raised);
+    cursor: pointer;
+  }
+
+  #gate button:hover { filter: brightness(1.08); }
+
+  .gate-error {
+    color: var(--danger);
+    font-size: 13px;
+    min-height: 18px;
+    margin: -2px 0 0;
+  }
+
+  .gate-hint {
+    font-size: 12px;
+    color: var(--muted);
+    margin-top: 18px;
+    line-height: 1.5;
+  }
+
+  @media (prefers-reduced-motion: no-preference) {
+    .shake { animation: shake 0.32s; }
+  }
+  @keyframes shake {
+    20%, 60% { transform: translateX(-5px); }
+    40%, 80% { transform: translateX(5px); }
+  }
+
+  /* ---------- App shell ---------- */
+
+  #app { display: none; }
+  #app.unlocked { display: block; }
+
+  header.top {
+    border-bottom: 1px solid var(--line);
+    background: var(--paper-raised);
+  }
+
+  .top-inner {
+    max-width: 1120px;
+    margin: 0 auto;
+    padding: 20px 28px;
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 16px;
+    flex-wrap: wrap;
+  }
+
+  .top-title h1 {
+    font-size: 22px;
+    font-weight: 600;
+  }
+
+  .top-title .byline {
+    font-size: 13px;
+    color: var(--muted);
+    margin-top: 2px;
+  }
+
+  .top-badge {
+    font-size: 12px;
+    color: var(--accent-2);
+    border: 1px solid var(--accent-2);
+    background: var(--accent-2-soft);
+    padding: 4px 10px;
+    border-radius: 999px;
+    white-space: nowrap;
+  }
+
+  .layout {
+    max-width: 1120px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 230px 1fr;
+    gap: 40px;
+    padding: 32px 28px 80px;
+  }
+
+  @media (max-width: 780px) {
+    .layout { grid-template-columns: 1fr; }
+  }
+
+  nav.side {
+    position: sticky;
+    top: 24px;
+    align-self: start;
+  }
+
+  @media (max-width: 780px) {
+    nav.side { position: static; margin-bottom: 8px; }
+  }
+
+  nav.side ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+  }
+
+  nav.side .stage-label {
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.07em;
+    color: var(--muted);
+    margin: 18px 0 6px;
+    padding: 0 12px;
+  }
+  nav.side .stage-label:first-child { margin-top: 0; }
+
+  nav.side button {
+    all: unset;
+    display: block;
+    width: 100%;
+    box-sizing: border-box;
+    padding: 8px 12px;
+    border-radius: 7px;
+    font-size: 14px;
+    color: var(--ink-soft);
+    cursor: pointer;
+  }
+
+  nav.side button:hover { background: var(--accent-soft); }
+
+  nav.side button.active {
+    background: var(--accent-soft);
+    color: var(--accent);
+    font-weight: 600;
+  }
+
+  nav.side button .tag {
+    float: right;
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    color: var(--accent-2);
+    font-weight: 600;
+  }
+
+  main { min-width: 0; }
+
+  section.view { display: none; }
+  section.view.active { display: block; }
+
+  .view h2 {
+    font-size: 28px;
+    font-weight: 600;
+    margin-bottom: 8px;
+  }
+
+  .view .lede {
+    font-size: 15.5px;
+    color: var(--ink-soft);
+    max-width: 62ch;
+    margin: 0 0 28px;
+  }
+
+  .card {
+    background: var(--paper-raised);
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    padding: 24px 26px;
+    box-shadow: var(--shadow);
+    margin-bottom: 20px;
+  }
+
+  .card h3 {
+    font-size: 16px;
+    font-weight: 600;
+    margin-bottom: 10px;
+  }
+
+  .card p { margin: 0 0 12px; color: var(--ink-soft); font-size: 14.5px; }
+  .card p:last-child { margin-bottom: 0; }
+
+  .card ul, .card ol { margin: 0 0 12px; padding-left: 20px; color: var(--ink-soft); font-size: 14.5px; }
+  .card ul:last-child, .card ol:last-child { margin-bottom: 0; }
+  .card li { margin-bottom: 4px; }
+
+  .field-list {
+    display: grid;
+    gap: 10px;
+  }
+  .field-list code {
+    background: var(--accent-soft);
+    color: var(--accent);
+    padding: 1px 6px;
+    border-radius: 4px;
+    font-size: 13px;
+  }
+
+  .prompt-wrap {
+    position: relative;
+  }
+
+  .prompt-wrap pre {
+    margin: 0;
+    padding: 22px 22px 22px;
+    background: var(--ink);
+    color: #e7e3d6;
+    border-radius: var(--radius);
+    overflow-x: auto;
+    font-size: 13px;
+    line-height: 1.65;
+    white-space: pre-wrap;
+    word-wrap: break-word;
+  }
+
+  @media (prefers-color-scheme: dark) {
+    .prompt-wrap pre { background: #0c0e13; }
+  }
+
+  .copy-btn {
+    position: absolute;
+    top: 14px;
+    right: 14px;
+    font: inherit;
+    font-size: 12.5px;
+    font-weight: 600;
+    padding: 6px 12px;
+    border-radius: 6px;
+    border: 1px solid rgba(255,255,255,0.25);
+    background: rgba(255,255,255,0.08);
+    color: #e7e3d6;
+    cursor: pointer;
+  }
+  .copy-btn:hover { background: rgba(255,255,255,0.16); }
+
+  .badge-soon {
+    display: inline-block;
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    font-weight: 600;
+    color: var(--accent-2);
+    background: var(--accent-2-soft);
+    border: 1px solid var(--accent-2);
+    padding: 3px 9px;
+    border-radius: 999px;
+    margin-bottom: 14px;
+  }
+
+  .step-num {
+    font-family: "Fraunces", serif;
+    font-weight: 600;
+    font-size: 13px;
+    color: var(--accent);
+    display: block;
+    margin-bottom: 4px;
+  }
+
+  footer.site {
+    max-width: 1120px;
+    margin: 0 auto;
+    padding: 0 28px 48px;
+    font-size: 12.5px;
+    color: var(--muted);
+    border-top: 1px solid var(--line);
+    padding-top: 20px;
+  }
+
+  .overview-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 16px;
+  }
+  @media (max-width: 560px) { .overview-grid { grid-template-columns: 1fr; } }
+</style>
+</head>
+<body>
+
+  <!-- ================= PASSWORD GATE ================= -->
+  <div id="gate">
+    <div class="gate-card" id="gateCard">
+      <div class="gate-mark">IBA</div>
+      <h1>Born-Global AI Venture Toolkit</h1>
+      <p class="gate-sub">IBA 250 — enter the password shared in class or on the course page.</p>
+      <form id="gateForm" autocomplete="off">
+        <input type="password" id="gateInput" placeholder="Password" autofocus required>
+        <button type="submit">Enter</button>
+        <p class="gate-error" id="gateError"></p>
+      </form>
+      <p class="gate-hint">This page is unlisted, not truly private — please don't share the link or password outside the class.</p>
+    </div>
+  </div>
+
+  <!-- ================= APP ================= -->
+  <div id="app">
+    <header class="top">
+      <div class="top-inner">
+        <div class="top-title">
+          <h1>Born-Global AI Venture Toolkit</h1>
+          <div class="byline">IBA 250 — Context of Global Business · Instructor: M. Morales Marenco</div>
+        </div>
+        <span class="top-badge">Students only</span>
+      </div>
+    </header>
+
+    <div class="layout">
+      <nav class="side" id="sideNav">
+        <ul>
+          <li><button data-view="overview" class="active">Overview</button></li>
+
+          <div class="stage-label">Stage 1 — Build the Opportunity</div>
+          <li><button data-view="step-a">Step A · Idea Generation</button></li>
+          <li><button data-view="step-b">Step B · Market Intel Agent <span class="tag">Soon</span></button></li>
+          <li><button data-view="step-c">Step C · Market Opportunity <span class="tag">Soon</span></button></li>
+
+          <div class="stage-label">Stage 2 — Choose Markets</div>
+          <li><button data-view="stage-2">Entry Mode & Culture <span class="tag">Soon</span></button></li>
+
+          <div class="stage-label">Stage 3 — Launch</div>
+          <li><button data-view="stage-3">Export & Launch <span class="tag">Soon</span></button></li>
+
+          <div class="stage-label">Reference</div>
+          <li><button data-view="worked-example">Worked Example <span class="tag">Soon</span></button></li>
+        </ul>
+      </nav>
+
+      <main>
+
+        <!-- OVERVIEW -->
+        <section class="view active" id="view-overview">
+          <h2>Welcome, founders.</h2>
+          <p class="lede">This toolkit collects the AI prompts and templates you'll use across the semester to build your born-digital, born-global venture. Each stage unlocks here as we reach it in class — check back regularly.</p>
+
+          <div class="overview-grid">
+            <div class="card">
+              <h3>How to use this</h3>
+              <p>Open the step you're working on, copy the prompt block into the AI tool of your choice, fill in your team's details, and follow the "after you run it" notes to fold the output into your assignment.</p>
+            </div>
+            <div class="card">
+              <h3>Keep your records</h3>
+              <p>Every prompt here feeds your AI Use &amp; Founder Decision Log and Evidence Ledger. Save raw AI output as you go — don't try to reconstruct it later.</p>
+            </div>
+          </div>
+        </section>
+
+        <!-- STEP A -->
+        <section class="view" id="view-step-a">
+          <span class="step-num">Assignment 1 · Section 2.2</span>
+          <h2>Step A — Structured Idea Generation</h2>
+          <p class="lede">Use this prompt to generate and screen at least five venture ideas. Do not ask an AI tool for "a good business idea" — this prompt forces constraints, a decision matrix, a competitor check, and pros/cons instead.</p>
+
+          <div class="card">
+            <h3>Before you paste this in</h3>
+            <p>Fill in these fields, then paste the whole block below into your AI tool.</p>
+            <div class="field-list">
+              <div><code>[TEAM NAME / FOUNDER NAMES]</code> — who's asking</div>
+              <div><code>[FOUNDER SKILLS, LANGUAGES, PRIOR EXPERIENCE]</code> — what your team brings</div>
+              <div><code>[INDUSTRY, INTEREST AREA, OR PROBLEM SPACE]</code> — leave "open" if you have no starting point</div>
+              <div><code>[WEEKS AVAILABLE TO PROTOTYPE]</code> — realistic time before Assignment 1 is due</div>
+              <div><code>[TOOL TYPE]</code> — does your AI tool create files / run code, or is it chat-only?</div>
+            </div>
+          </div>
+
+          <div class="card prompt-card">
+            <h3>The prompt</h3>
+            <div class="prompt-wrap">
+              <button class="copy-btn" id="copyBtn">Copy</button>
+              <pre id="promptText">Act as a startup ideation and market-screening advisor for a three-founder
+student team building a born-digital, born-global venture for a semester-long
+international business course project.
+
+TEAM CONTEXT
+- Founders: [TEAM NAME / FOUNDER NAMES]
+- Skills, languages, and relevant experience: [FOUNDER SKILLS, LANGUAGES, PRIOR EXPERIENCE]
+- Interest area (leave open if none): [INDUSTRY, INTEREST AREA, OR PROBLEM SPACE]
+- Time available to build a working prototype: [WEEKS AVAILABLE TO PROTOTYPE]
+- My tool type (has file/code capability, or chat-only): [TOOL TYPE]
+
+HARD CONSTRAINTS — every idea must satisfy all four
+1. Digitally deliverable: the core product/service can be delivered entirely
+   through software, with no physical shipping required to serve a customer.
+2. Potentially scalable across borders: nothing about the idea limits it to one
+   country (e.g., no dependence on a single country's physical infrastructure,
+   license, or regulator).
+3. Solves a definable customer problem: name the customer and the specific pain
+   point. Reject ideas where the "problem" is vague or the customer segment is
+   "everyone."
+4. Feasible for a student team to prototype in the time available: a working
+   demo (even a simple one) must be realistic given our skills and weeks above.
+
+TASK 1 — GENERATE IDEAS
+Generate at least 5 distinct venture ideas that satisfy all four constraints.
+For each idea, provide:
+- Working name
+- One-sentence pitch
+- Target customer (be specific — not "small businesses," but e.g. "solo
+  freelance graphic designers in emerging-market cities")
+- The customer problem in one sentence
+- Why it is digitally deliverable
+- Why it is plausible cross-border (which regions/segments might it fit
+  beyond one home market, and why)
+- Rough revenue model
+
+TASK 2 — SET UP A RESEARCH FOLDER AND ANALYSIS SCRIPT
+For each of the 5+ ideas, list 2-3 data points that would help us judge
+"global scalability," "customer problem severity," and "data availability" in
+the decision matrix in Task 3 (e.g., market size for the target segment,
+digital adoption rate, number of visible competitors). For each data point,
+name where we could actually find it: our university library databases
+(Statista, Euromonitor Passport, IBISWorld, MarketLine, Business Source
+Complete) or public sources (World Bank Open Data, ITU DataHub, OECD,
+globalEDGE). Do not invent values — only propose what to look for and where.
+
+If my tool type above has file and code capability:
+- Create a project folder structure for me: a top-level folder with
+  /data/raw (for exported files or pasted tables from library databases),
+  /data/sources (a running log: source name, URL/database, date accessed,
+  what it's for), and /analysis (scripts and outputs).
+- Write a Python script that reads a simple CSV I'll fill in (columns: idea
+  name, criterion, raw score 1-5, weight) and outputs: a normalized weighted
+  score per idea, a ranked bar chart, and a printed summary table. I will
+  fill in the actual scores after I do the research — do not fabricate data
+  to fill the template.
+
+If my tool type above is chat-only:
+- Give me the same folder structure as a checklist I can create manually in
+  Google Drive or on my computer, and give me the same Python script as a
+  code block I can run myself in Google Colab once I have real data.
+
+TASK 3 — DECISION MATRIX
+Build a decision matrix with the 5+ ideas as rows and these criteria as
+columns: customer problem (severity/clarity), global scalability,
+differentiation, feasibility for our team, data availability, and founder
+interest. Leave every score cell blank for us to fill in after research —
+do not assign scores yourself. Suggest a starting weight (must total 100%)
+for each criterion and explain the logic for each weight in one sentence.
+
+TASK 4 — COMPETITOR CHECK
+For each idea, name 2-3 obvious existing competitors or substitutes (real
+products/companies, not hypothetical ones) that already address a similar
+problem. For each, state in one or two sentences what would be genuinely
+different about our offering. If you are not confident a named competitor is
+real and current, say so explicitly instead of guessing.
+
+TASK 5 — PROS AND CONS
+For each of the 5+ ideas, list 3-4 pros and 3-4 cons, covering at minimum:
+market/customer risk, technical/build risk, and competitive risk.
+
+OUTPUT RULES
+- Do not pick a winner. Present all ideas neutrally with their matrix,
+  competitor notes, and pros/cons, then stop. The founders — not the AI —
+  make the final selection, and that decision and its reasoning will be
+  recorded separately.
+- Flag anywhere you are uncertain, guessing, or lack current information
+  instead of filling the gap with an invented fact.
+- Format the response with clear headers per idea plus one combined table
+  for the decision matrix.</pre>
+            </div>
+          </div>
+
+          <div class="card">
+            <h3>After you run it</h3>
+            <ol>
+              <li>Save the raw output and log it in the AI Use &amp; Founder Decision Log (tool used, prompt summary, what you kept/changed).</li>
+              <li>Do the actual research named in Task 2 using UA library databases and the public sources listed, and record each source in the Evidence Ledger.</li>
+              <li>Fill in the decision matrix with real scores tied to that evidence — not the AI's guesses.</li>
+              <li>As a team, discuss and select one idea. Write down why, in your own words. This decision must be attributed to the founders.</li>
+              <li>Move to naming the company and checking domain/social availability, then on to Step B.</li>
+            </ol>
+          </div>
+        </section>
+
+        <!-- COMING SOON VIEWS -->
+        <section class="view" id="view-step-b">
+          <span class="badge-soon">Coming soon</span>
+          <h2>Step B — AI Market Intelligence Agent/Skill</h2>
+          <p class="lede">A configuration template and reusable prompt for the agent/workflow that pulls country evidence, scores your market-screening matrix, and flags what's missing, old, or unverifiable — posted once we reach this step in class.</p>
+        </section>
+
+        <section class="view" id="view-step-c">
+          <span class="badge-soon">Coming soon</span>
+          <h2>Step C — Global Market Opportunity Assessment</h2>
+          <p class="lede">Prompts for the six textbook-aligned GMOA tasks: readiness, product suitability, country screening, industry potential, partners, and sales potential.</p>
+        </section>
+
+        <section class="view" id="view-stage-2">
+          <span class="badge-soon">Coming soon</span>
+          <h2>Stage 2 — Entry Mode, Political/Legal, and Cultural Analysis</h2>
+          <p class="lede">Prompts for the entry-mode decision framework and the cross-cultural comparison work in Assignment 2.</p>
+        </section>
+
+        <section class="view" id="view-stage-3">
+          <span class="badge-soon">Coming soon</span>
+          <h2>Stage 3 — Exporting Strategy and Launch</h2>
+          <p class="lede">Prompts supporting Assignment 3's refined exporting strategy and international marketing launch.</p>
+        </section>
+
+        <section class="view" id="view-worked-example">
+          <span class="badge-soon">Coming soon</span>
+          <h2>Worked Example</h2>
+          <p class="lede">A full run-through of this toolkit applied to one example company, mirroring the written-report worked example in the project guide.</p>
+        </section>
+
+      </main>
+    </div>
+
+    <footer class="site">
+      Internal course material for IBA 250. Do not redistribute outside the class. · Last updated <span id="lastUpdated"></span>
+    </footer>
+  </div>
+
+<script>
+  // ---- CONFIG ----
+  // SHA-256 hex digest of the class password. Demo password below is "changeme2026" —
+  // replace this hash before sharing the link (see README for how to generate a new one).
+  const PASSWORD_HASH = "d4d6209550be592f2663cec93e6ed62a953b8fda4eb15b87d5bc6aad1de578ac";
+  const SESSION_KEY = "iba250_unlocked";
+
+  async function sha256Hex(text) {
+    const buf = await crypto.subtle.digest("SHA-256", new TextEncoder().encode(text));
+    return Array.from(new Uint8Array(buf)).map(b => b.toString(16).padStart(2, "0")).join("");
+  }
+
+  function unlock() {
+    document.getElementById("gate").style.display = "none";
+    document.getElementById("app").classList.add("unlocked");
+  }
+
+  const gateForm = document.getElementById("gateForm");
+  const gateInput = document.getElementById("gateInput");
+  const gateError = document.getElementById("gateError");
+  const gateCard = document.getElementById("gateCard");
+
+  gateForm.addEventListener("submit", async (e) => {
+    e.preventDefault();
+    const hash = await sha256Hex(gateInput.value);
+    if (hash === PASSWORD_HASH) {
+      sessionStorage.setItem(SESSION_KEY, "1");
+      unlock();
+    } else {
+      gateError.textContent = "That password doesn't match. Try again.";
+      gateCard.classList.remove("shake");
+      void gateCard.offsetWidth;
+      gateCard.classList.add("shake");
+      gateInput.value = "";
+      gateInput.focus();
+    }
+  });
+
+  if (sessionStorage.getItem(SESSION_KEY) === "1") {
+    unlock();
+  }
+
+  // ---- Nav routing ----
+  const navButtons = document.querySelectorAll("nav.side button[data-view]");
+  const views = document.querySelectorAll("section.view");
+
+  function showView(name) {
+    views.forEach(v => v.classList.toggle("active", v.id === "view-" + name));
+    navButtons.forEach(b => b.classList.toggle("active", b.dataset.view === name));
+    if (history.replaceState) history.replaceState(null, "", "#" + name);
+  }
+
+  navButtons.forEach(btn => {
+    btn.addEventListener("click", () => showView(btn.dataset.view));
+  });
+
+  const initial = (location.hash || "#overview").slice(1);
+  if (document.getElementById("view-" + initial)) showView(initial);
+
+  // ---- Copy prompt ----
+  const copyBtn = document.getElementById("copyBtn");
+  copyBtn.addEventListener("click", async () => {
+    try {
+      await navigator.clipboard.writeText(document.getElementById("promptText").textContent);
+      copyBtn.textContent = "Copied";
+      setTimeout(() => (copyBtn.textContent = "Copy"), 1600);
+    } catch (err) {
+      copyBtn.textContent = "Select & copy manually";
+      setTimeout(() => (copyBtn.textContent = "Copy"), 2000);
+    }
+  });
+
+  // ---- Footer date ----
+  document.getElementById("lastUpdated").textContent = new Date("2026-08-21").toLocaleDateString(
+    "en-US", { year: "numeric", month: "long", day: "numeric" }
+  );
+</script>
+
+</body>
+</html>
