@@ -664,9 +664,9 @@ OUTPUT RULES
 
 <script>
   // ---- CONFIG ----
-  // SHA-256 hex digest of the class password. Demo password below is "changeme2026" —
-  // replace this hash before sharing the link (see README for how to generate a new one).
-  const PASSWORD_HASH = "d4d6209550be592f2663cec93e6ed62a953b8fda4eb15b87d5bc6aad1de578ac";
+  // SHA-256 hex digest of the class password.
+  // To change it: python3 -c "import hashlib; print(hashlib.sha256('NEW-PASSWORD'.encode()).hexdigest())"
+  const PASSWORD_HASH = "7180a5d2a2bdc6d15694cded0fa21615ed7b833ec00946988c1aaf9bc89b41ed";
   const SESSION_KEY = "iba250_unlocked";
 
   async function sha256Hex(text) {
