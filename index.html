@@ -386,6 +386,21 @@
   }
   .copy-btn:hover { background: rgba(255,255,255,0.16); }
 
+  .download-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font: inherit;
+    font-size: 14.5px;
+    font-weight: 600;
+    text-decoration: none;
+    padding: 10px 16px;
+    border-radius: 8px;
+    background: var(--accent);
+    color: var(--paper-raised) !important;
+  }
+  .download-btn:hover { filter: brightness(1.08); }
+
   .badge-soon {
     display: inline-block;
     font-size: 11px;
@@ -484,10 +499,26 @@
           <h2>Welcome, founders.</h2>
           <p class="lede">This toolkit collects the AI prompts and templates you'll use across the semester to build your born-digital, born-global venture. Each stage unlocks here as we reach it in class — check back regularly.</p>
 
+          <div class="card start-here">
+            <span class="badge-soon" style="color:var(--accent); border-color:var(--accent); background:var(--accent-soft);">New to AI tools? Start here</span>
+            <h3>Never used an AI chat tool before? Follow these steps exactly.</h3>
+            <ol>
+              <li><strong>Open an AI chat tool</strong> in your browser. Any of these work and have a free version: <a href="https://chat.openai.com" target="_blank" rel="noopener">chat.openai.com</a> (ChatGPT), <a href="https://claude.ai" target="_blank" rel="noopener">claude.ai</a> (Claude), or <a href="https://gemini.google.com" target="_blank" rel="noopener">gemini.google.com</a> (Gemini). You may need to create a free account with your email.</li>
+              <li><strong>Come back to this page</strong> and use the menu on the left to open the step you're working on (for example, "Step A · Idea Generation").</li>
+              <li><strong>Get the prompt.</strong> Click the green <span class="mono">Download</span> button to save the prompt as a file, or click <span class="mono">Copy</span> to copy the text directly.</li>
+              <li><strong>Paste it</strong> into the message box of the AI chat tool you opened in step 1.</li>
+              <li><strong>Before you press Enter</strong>, replace every bracketed placeholder — things that look like <code>[TEAM NAME / FOUNDER NAMES]</code> — with your team's real information. The AI reads the brackets as instructions, not decoration, so leaving them in will confuse it.</li>
+              <li><strong>Press Enter</strong> (or click the send button) and read the entire response before doing anything else.</li>
+              <li><strong>Save the AI's answer immediately</strong> — copy/paste it into a Google Doc or a plain text file on your computer. Some AI tools do not keep your chat history forever, and you cannot get the output back once it's gone.</li>
+              <li><strong>Follow the "After you run it" checklist</strong> on the step's page to turn that raw AI output into your actual assignment.</li>
+            </ol>
+            <p style="margin-top:14px;"><strong>Stuck at any point?</strong> Ask a classmate or bring it to office hours — this page will not change or grade anything for you, it only gives you the starting prompt.</p>
+          </div>
+
           <div class="overview-grid">
             <div class="card">
               <h3>How to use this</h3>
-              <p>Open the step you're working on, copy the prompt block into the AI tool of your choice, fill in your team's details, and follow the "after you run it" notes to fold the output into your assignment.</p>
+              <p>Open the step you're working on, download or copy the prompt block, paste it into the AI tool of your choice, fill in your team's details, and follow the "after you run it" notes to fold the output into your assignment.</p>
             </div>
             <div class="card">
               <h3>Keep your records</h3>
@@ -501,6 +532,12 @@
           <span class="step-num">Assignment 1 · Section 2.2</span>
           <h2>Step A — Structured Idea Generation</h2>
           <p class="lede">Use this prompt to generate and screen at least five venture ideas. Do not ask an AI tool for "a good business idea" — this prompt forces constraints, a decision matrix, a competitor check, and pros/cons instead.</p>
+
+          <div class="card">
+            <h3>Get the file</h3>
+            <p>Download the prompt as a text file, or scroll down and use the "Copy" button on the prompt box instead — either way works.</p>
+            <a class="download-btn" href="step-a-brainstorming-prompt.md" download>&#8595; Download Step A Brainstorming Prompt.md</a>
+          </div>
 
           <div class="card">
             <h3>Before you paste this in</h3>
@@ -666,7 +703,7 @@ OUTPUT RULES
   // ---- CONFIG ----
   // SHA-256 hex digest of the class password.
   // To change it: python3 -c "import hashlib; print(hashlib.sha256('NEW-PASSWORD'.encode()).hexdigest())"
-  const PASSWORD_HASH = "7180a5d2a2bdc6d15694cded0fa21615ed7b833ec00946988c1aaf9bc89b41ed";
+  const PASSWORD_HASH = "6ee5ab37b03f1411177e4a49ebf56e85b50a9f5e5e9a67f1360eb68931285ac0";
   const SESSION_KEY = "iba250_unlocked";
 
   async function sha256Hex(text) {

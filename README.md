@@ -1,90 +1,64 @@
-# IBA 250 — Born-Global AI Venture Toolkit (GitHub Pages)
+# IBA 250 — Born-Global AI Venture Toolkit
 
-A single-page site (`index.html`) gated by a shared password. No student
-accounts needed — just the URL and the password you give out in class.
+Password-gated GitHub Pages site for IBA 250 students. Live at:
+https://marlethm.github.io/iba250-toolkit/
 
-**Important:** this is a soft gate, not real security. The password check
-runs in the visitor's browser, so anyone who opens the browser's dev tools
-could find the password hash and, with effort, work out or brute-force the
-password. Use this only for materials that aren't sensitive if seen by an
-outsider — which is what's here. Don't put anything confidential (grades,
-personal student data, unpublished exams) on this page.
+This is a **soft gate** (client-side password check), not real security. Fine for course
+materials that aren't sensitive, but don't treat it as private.
 
-## 1. Publish it
+## What's in this repo
 
-```bash
-# from this folder
-git init
-git add index.html .nojekyll README.md
-git commit -m "IBA 250 toolkit: Step A"
-git branch -M main
-git remote add origin https://github.com/<your-username>/<repo-name>.git
-git push -u origin main
+- `index.html` — the whole site (single file: HTML, CSS, and JavaScript together).
+- `step-a-brainstorming-prompt.md` — the Step A prompt, offered as a real download on the site.
+- `.nojekyll` — tells GitHub Pages to serve the site as-is (required; do not delete).
+
+## Publishing changes (after you edit index.html or add a file)
+
+From this folder, in Terminal:
+
 ```
-
-Repo can be **public** — the password gate is the only barrier, and a
-public repo means GitHub Pages works on the free plan with no extra setup.
-
-Then: **Settings → Pages → Build and deployment → Source: Deploy from a
-branch → Branch: `main` / `/(root)` → Save.** GitHub gives you a URL like
-`https://<your-username>.github.io/<repo-name>/` within a minute or two.
-
-## 2. Set your real password
-
-The file ships with a demo password (`changeme2026`) — replace it before
-you share the link.
-
-Generate a SHA-256 hash of your chosen password:
-
-```bash
-python3 -c "import hashlib; print(hashlib.sha256('YOUR-NEW-PASSWORD'.encode()).hexdigest())"
-```
-
-Copy the 64-character result, open `index.html`, find this line near the
-bottom (inside the `<script>` tag):
-
-```js
-const PASSWORD_HASH = "d4d6209550be592f2663cec93e6ed62a953b8fda4eb15b87d5bc6aad1de578ac";
-```
-
-Replace the hash with your new one, commit, and push:
-
-```bash
-git add index.html
-git commit -m "Set class password"
+git add .
+git commit -m "describe your change here"
 git push
 ```
 
-Pick something you can say out loud in class or post on the LMS — it
-doesn't need to be a "strong" password in the security sense, since this
-isn't protecting anything sensitive.
+GitHub Pages rebuilds automatically 1-2 minutes after you push. Refresh the live URL
+(hard refresh — Cmd+Shift+R on Mac — if you don't see the change).
 
-## 3. Add content for later steps
+## Changing the class password
 
-Each stage already has a placeholder section and nav entry (Step B, Step C,
-Stage 2, Stage 3, Worked Example), each marked "Coming soon." To fill one
-in:
+1. Pick a new password.
+2. In Terminal, run (replace `NEW-PASSWORD` with your real password, keep the quotes):
+   ```
+   python3 -c "import hashlib; print(hashlib.sha256('NEW-PASSWORD'.encode()).hexdigest())"
+   ```
+3. Copy the long string it prints out.
+4. Open `index.html`, find this line near the bottom (search for `PASSWORD_HASH`):
+   ```js
+   const PASSWORD_HASH = "...";
+   ```
+5. Replace the text between the quotes with the string you copied.
+6. Save the file, then push (see "Publishing changes" above).
 
-1. Open `index.html` and find the matching `<section class="view" id="view-step-b">` block (swap `step-b` for the one you're editing).
-2. Replace the `<span class="badge-soon">Coming soon</span>` and placeholder paragraph with real content — you can copy the structure used in the Step A section (the `.card` blocks, the `<pre id="...">` prompt block, the "before/after" cards).
-3. If you add a new `<pre>` prompt block, give it a unique `id` and either reuse the existing copy button's JS by duplicating the button + a small script snippet, or ask Claude to wire it up.
-4. Commit and push — GitHub Pages redeploys automatically, usually within a minute.
+The current password (as of August 2026) is `IBA250Fall2026`.
 
-## 4. Testing changes before you push
+## Adding content to a "Coming soon" section (Step B, Step C, Stage 2, Stage 3, Worked Example)
 
-Password checking uses the browser's built-in crypto, which requires a
-"secure context." Double-clicking `index.html` to open it as a `file://`
-page will **not** work for the password gate. Test locally with:
+Each section is one `<section class="view" id="view-...">...</section>` block inside
+`index.html`. Find the one you want (e.g. `id="view-step-b"`), and replace its contents
+following the same pattern as the Step A section right above it: a short intro, a card
+with any fields students need to fill in, a card with the prompt itself (add a Download
+button the same way Step A does, pointing at a new `.md` file you add to this folder),
+and an "After you run it" checklist. Remove the `<span class="badge-soon">Coming soon</span>`
+line once real content is in place.
 
-```bash
-python3 -m http.server 8000
-# then open http://localhost:8000 in a browser
-```
+## Verifying it still works before you push
 
-Or just push and test on the live `github.io` URL.
+Open `index.html` directly in your browser (double-click it) and check:
 
-## Files
-
-- `index.html` — the whole site (single file, no build step)
-- `.nojekyll` — tells GitHub Pages not to run Jekyll processing on this repo
-- `README.md` — this file (not part of the published site)
+- The password screen appears and blocks the rest of the page.
+- A wrong password shows an error and does not unlock it.
+- The correct password unlocks the page, and reloading the page keeps it unlocked
+  (until you close the browser tab).
+- The left-hand menu switches between sections.
+- The Step A "Download" button and "Copy" button both work.
