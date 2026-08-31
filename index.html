@@ -687,6 +687,11 @@ OUTPUT RULES
           </div>
 
           <div class="card">
+            <h3>No Python required</h3>
+            <p>The prompt below has your AI tool build one optional file, <code>scripts/score_markets.py</code>, that double-checks the weighted-score math and draws a bar chart &mdash; for teams that already have Python installed. <strong>You do not need it to complete Step B.</strong> The required output format already has the AI show the weighted-score calculation directly in its chat response for every run; that alone satisfies &ldquo;reproduce the market-screening logic consistently.&rdquo; If <code>python3</code> isn&rsquo;t installed on your computer, skip the script entirely, keep the CSV files as your evidence record (open them in Excel or Google Sheets if that&rsquo;s easier), and use the numbers your AI tool already printed. Nothing else in this workflow depends on Python.</p>
+          </div>
+
+          <div class="card">
             <h3>Before you paste this in</h3>
             <p>Fill in these six fields, then paste the whole block below into your AI tool.</p>
             <div class="field-list">
@@ -750,9 +755,13 @@ containing:
    value, year/date, country, source, data-quality note.
 3. `templates/scorecard.csv` — empty template, columns: country, criterion,
    weight, raw score (1-5), weighted score, evidence reference.
-4. `scripts/score_markets.py` — reads a filled-in scorecard.csv and outputs a
-   weighted total per country, a ranked table, and a ranked bar chart. It
-   must only aggregate what's in the file — never invent or estimate a score.
+4. `scripts/score_markets.py` — OPTIONAL, only useful if I have Python
+   installed. Reads a filled-in scorecard.csv and outputs a weighted total
+   per country, a ranked table, and a ranked bar chart, as a double-check
+   on the arithmetic you already showed in your response. It must only
+   aggregate what's in the file — never invent or estimate a score. Note in
+   your response that this file is optional and that the workflow is
+   complete without ever running it.
 5. `logs/change_log.md` — empty template, columns: run date,
    indicator/country changed, old value, new value, affects ranking
    (yes/no/unclear), founder note.

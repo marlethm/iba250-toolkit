@@ -39,6 +39,19 @@ criteria. If your team later wants true autonomy (e.g., a scheduled job that
 re-runs itself weekly with no founder in the loop), that's a Stage 2/3
 enhancement — not a Stage 1 requirement.
 
+## No Python required
+
+The prompt below has your AI tool build one optional file,
+`scripts/score_markets.py`, that double-checks the weighted-score math and
+draws a bar chart — for teams that already have Python installed. **You do
+not need it to complete Step B.** The required output format already has
+the AI show the weighted-score calculation directly in its chat response
+for every run; that alone satisfies "reproduce the market-screening logic
+consistently." If `python3` isn't installed on your computer, skip the
+script entirely, keep the CSV files as your evidence record (open them in
+Excel or Google Sheets if that's easier), and use the numbers your AI tool
+already printed. Nothing else in this workflow depends on Python.
+
 ## Before you paste this in
 
 Fill in these six fields. Everything else in the prompt stays as written —
@@ -109,9 +122,13 @@ containing:
    value, year/date, country, source, data-quality note.
 3. `templates/scorecard.csv` — empty template, columns: country, criterion,
    weight, raw score (1-5), weighted score, evidence reference.
-4. `scripts/score_markets.py` — reads a filled-in scorecard.csv and outputs a
-   weighted total per country, a ranked table, and a ranked bar chart. It
-   must only aggregate what's in the file — never invent or estimate a score.
+4. `scripts/score_markets.py` — OPTIONAL, only useful if I have Python
+   installed. Reads a filled-in scorecard.csv and outputs a weighted total
+   per country, a ranked table, and a ranked bar chart, as a double-check
+   on the arithmetic you already showed in your response. It must only
+   aggregate what's in the file — never invent or estimate a score. Note in
+   your response that this file is optional and that the workflow is
+   complete without ever running it.
 5. `logs/change_log.md` — empty template, columns: run date,
    indicator/country changed, old value, new value, affects ranking
    (yes/no/unclear), founder note.
