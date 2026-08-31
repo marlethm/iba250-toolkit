@@ -479,7 +479,7 @@
           <div class="stage-label">Stage 1 — Build the Opportunity</div>
           <li><button data-view="step-a">Step A · Idea Generation</button></li>
           <li><button data-view="step-b">Step B · Market Intel Skill</button></li>
-          <li><button data-view="step-c">Step C · Market Opportunity <span class="tag">Soon</span></button></li>
+          <li><button data-view="step-c">Step C · Market Opportunity</button></li>
 
           <div class="stage-label">Stage 2 — Choose Markets</div>
           <li><button data-view="stage-2">Entry Mode & Culture <span class="tag">Soon</span></button></li>
@@ -821,10 +821,163 @@ monitoring runs before the assignment is due.</pre>
           </div>
         </section>
 
+        <!-- STEP C -->
         <section class="view" id="view-step-c">
-          <span class="badge-soon">Coming soon</span>
-          <h2>Step C — Global Market Opportunity Assessment</h2>
-          <p class="lede">Prompts for the six textbook-aligned GMOA tasks: readiness, product suitability, country screening, industry potential, partners, and sales potential.</p>
+          <span class="step-num">Assignment 1 · Section 2.5</span>
+          <h2>Step C — Complete the Global Market Opportunity Assessment</h2>
+          <p class="lede">Six tasks, built on top of your Step B scorecard: is your team ready, does your product actually travel, which countries survive screening, what do your top 3 look like up close, who are your partners, and what could you realistically sell. This is the largest single piece of your Assignment 1 report and rubric.</p>
+
+          <div class="card">
+            <h3>Before you start: do you have Step B results?</h3>
+            <p>This step does not re-screen countries from scratch — it builds directly on your Step B Skill's evidence table and scorecard. If you haven't done Step B yet (or haven't run it at least once with real data), go do that first. Any AI chat tool works fine for Step C itself; Claude Code isn't required unless you want it to read your Step B files directly.</p>
+          </div>
+
+          <div class="card">
+            <h3>Get the files</h3>
+            <p>Download the prompt, and download the sales-funnel calculator — a small, tested tool for Task 6 so your revenue estimate has visible, checkable arithmetic instead of one asserted number.</p>
+            <a class="download-btn" href="step-c-global-market-opportunity-assessment-prompt.md" download>&#8595; Download Step C Global Market Opportunity Assessment Prompt.md</a>
+            <a class="download-btn" href="sales-funnel-calculator.zip" download style="margin-left:10px;">&#8595; Download sales-funnel-calculator.zip</a>
+          </div>
+
+          <div class="card">
+            <h3>Before you paste this in</h3>
+            <p>Fill in these six fields, then paste the whole block below into your AI tool.</p>
+            <div class="field-list">
+              <div><code>[TEAM NAME / FOUNDER NAMES]</code> — who's asking</div>
+              <div><code>[VENTURE PROFILE]</code> — same profile you used for Step B</div>
+              <div><code>[FOUNDER READINESS INPUTS]</code> — your team's real financial resources, skills, weekly time available, data access, support capacity, cybersecurity/privacy capability, and time-zone coverage</div>
+              <div><code>[STEP B SCORECARD RESULTS]</code> — paste your most recent Step B Skill run's evidence table and ranked scorecard</div>
+              <div><code>[PRICING / MONETIZATION ASSUMPTIONS]</code> — your current thinking on price and monetization, or say "none yet"</div>
+              <div><code>[TOOL TYPE]</code> — chat-only is fine, or Claude Code if you want it reading your Step B files directly</div>
+            </div>
+          </div>
+
+          <div class="card prompt-card">
+            <h3>The prompt</h3>
+            <div class="prompt-wrap">
+              <button class="copy-btn" data-copy-target="promptTextC">Copy</button>
+              <pre id="promptTextC">Act as our Global Market Opportunity Assessment analyst for a three-founder
+student venture team building a born-digital, born-global company for a
+semester-long international business course project (IBA 250, Assignment 1,
+Step C). This assessment is organized around the six tasks used in the course
+textbook's Global Market Opportunity Assessment chapter (Cavusgil, Knight, &
+Riesenberger), adapted to a small, new venture rather than a firm with the
+resources of a multinational corporation.
+
+VENTURE CONTEXT
+- Founders: [TEAM NAME / FOUNDER NAMES]
+- Venture profile: [VENTURE PROFILE]
+- Founder readiness inputs (real, specific — do not generalize these):
+  [FOUNDER READINESS INPUTS]
+- Step B market-screening Skill results (evidence table + ranked scorecard from
+  our most recent run): [STEP B SCORECARD RESULTS]
+- Pricing / monetization assumptions so far: [PRICING / MONETIZATION ASSUMPTIONS]
+- My tool type: [TOOL TYPE]
+
+EVIDENCE RULES (apply to every task below)
+- Every country score, statistic, or forecast needs a cited source and a
+  year/date. Never invent or estimate a missing number — write "not found /
+  needs founder research" instead.
+- Keep SOURCE FACTS and AI INTERPRETATION visibly separate — label
+  interpretation explicitly, never blend it into an evidence table or cell.
+- Any forecast, conversion rate, reach estimate, or monetization assumption
+  that the founders (not a cited source) are supplying must be labeled
+  "FOUNDER ASSUMPTION" wherever it appears.
+- Do not select or rank on the founders' behalf beyond what the scoring
+  method below produces. Recommend; do not decide.
+
+TASK 1 — Organizational readiness to internationalize
+Using the founder readiness inputs above, produce this table, one row per
+factor, honestly assessing gaps rather than assuming a fully-resourced team:
+
+| Readiness factor | Current status (evidence) | Gap / action to close it |
+|---|---|---|
+| Financial & tangible resources | | |
+| Skills & competencies (languages, tech, marketing) | | |
+| Time availability | | |
+| Data access (library databases, tools) | | |
+| Customer support capacity | | |
+| Cybersecurity / privacy capability | | |
+| Time-zone coverage | | |
+| Commitment to international expansion | | |
+
+TASK 2 — Suitability of the product/service for foreign markets
+For our venture, explain why the offering can travel digitally, then produce
+this table identifying what's universal versus what needs adaptation:
+
+| Factor | Findings (with sources) | Adaptation needed? |
+|---|---|---|
+| Customer characteristics & preferences | | |
+| Laws & regulations (data privacy, content, consumer protection) | | |
+| Channel intermediary requirements (app stores, payment platforms) | | |
+| Competitors' offerings | | |
+
+Identify the major barriers to cross-border delivery explicitly, separate
+from the table.
+
+TASK 3 — Screen countries to identify target markets
+Do NOT re-screen the countries from scratch. Reconcile and build on the
+pasted Step B scorecard results above:
+- Reproduce the ranked scorecard (all 7 required criteria: market size &
+  growth, market intensity, consumption capacity, receptivity to imports,
+  infrastructure, economic freedom, country risk — plus any venture-specific
+  criteria already in use), with weights, scores, and source citations
+  exactly as the Step B Skill produced them.
+- If any score looks stale (older than 3 years) or any weight seems
+  misaligned with what Tasks 1-2 above just revealed about our actual
+  readiness or product fit, flag it explicitly as a recommendation to
+  re-run the Step B Skill — do not silently change the numbers yourself.
+- State the resulting top-3 country shortlist plainly.
+
+TASK 4 — Industry market potential (for the top-3 countries only)
+For each of the three strongest countries from Task 3, move from macro
+indicators to industry-specific demand:
+
+| Country | Industry/customer segment size (cited) | Growth trend (cited, w/ years) | Demand drivers | Comparable competitors/substitutes |
+|---|---|---|---|---|
+| | | | | |
+| | | | | |
+| | | | | |
+
+TASK 5 — Choose qualified foreign business partners
+For each of the top-3 countries, identify the partner types that would
+reduce friction or accelerate demand for a digital venture (payment
+provider, app store, marketplace, local university/incubator,
+creator/influencer, reseller, cloud provider, translator/localization
+provider, industry association). Name real, current organizations where you
+can verify them; if you cannot verify a specific name is real and current,
+describe the partner type and say so explicitly instead of inventing a name.
+
+TASK 6 — Estimate company sales potential
+For each of the top-3 countries, build a transparent, assumption-driven
+funnel: reachable customers -> expected conversion rate -> paying users ->
+price -> revenue, over a stated period. Provide a base case AND at least one
+alternative scenario (e.g., slower adoption, stronger channel partnership).
+Label every input as either a cited figure (with source) or a FOUNDER
+ASSUMPTION. Do not produce a single number with no visible inputs.
+
+OUTPUT RULES
+- Follow the six tasks in order, with clear headers matching Section 3 of
+  the written report template (Task 1 through Task 6).
+- Every table cell is either a cited fact, a clearly labeled FOUNDER
+  ASSUMPTION, or "not found / needs founder research" — never a silent guess.
+- End with a short summary: the top-3 country shortlist from Task 3, and the
+  single biggest open risk or unknown across Tasks 1-6 that the founders
+  should resolve before Assignment 1 is due.</pre>
+            </div>
+          </div>
+
+          <div class="card">
+            <h3>After you run it</h3>
+            <ol>
+              <li>Save the raw output and log it in the AI Use &amp; Founder Decision Log — note what you kept, changed, or rejected, especially any FOUNDER ASSUMPTION the AI proposed on your behalf.</li>
+              <li>Verify at least the highest-stakes numbers yourself (Task 3's top scores, Task 4's market-size figures, Task 6's revenue estimates) against the original sources before they go in your report.</li>
+              <li>Fill in Task 6's actual numbers using the sales funnel calculator above so the arithmetic is transparent and the base-case/alternative-scenario comparison is visible, not just asserted.</li>
+              <li>Drop this output straight into Section 3 (Global Market Opportunity Assessment) of your report, using the same six-task subheadings, and use Task 3's shortlist to write Section 4 (Country Screening Model and Results).</li>
+              <li>Record in your Evidence Ledger any source you had to go find yourself because the AI flagged something as "not found."</li>
+            </ol>
+            <p><strong>Reminder:</strong> this satisfies Step C of Assignment 1 (Section 2.5 of the project guide) and uses the required seven-criterion scorecard from Section 2.6. Task 3 alone is worth 12 of the report's 60 points — more than any other single task — so the sourcing here matters most.</p>
+          </div>
         </section>
 
         <section class="view" id="view-stage-2">
