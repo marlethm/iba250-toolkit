@@ -478,7 +478,7 @@
 
           <div class="stage-label">Stage 1 — Build the Opportunity</div>
           <li><button data-view="step-a">Step A · Idea Generation</button></li>
-          <li><button data-view="step-b">Step B · Market Intel Agent <span class="tag">Soon</span></button></li>
+          <li><button data-view="step-b">Step B · Market Intel Skill</button></li>
           <li><button data-view="step-c">Step C · Market Opportunity <span class="tag">Soon</span></button></li>
 
           <div class="stage-label">Stage 2 — Choose Markets</div>
@@ -488,7 +488,7 @@
           <li><button data-view="stage-3">Export & Launch <span class="tag">Soon</span></button></li>
 
           <div class="stage-label">Reference</div>
-          <li><button data-view="worked-example">Worked Example <span class="tag">Soon</span></button></li>
+          <li><button data-view="worked-example">Worked Example</button></li>
         </ul>
       </nav>
 
@@ -554,8 +554,8 @@
           <div class="card prompt-card">
             <h3>The prompt</h3>
             <div class="prompt-wrap">
-              <button class="copy-btn" id="copyBtn">Copy</button>
-              <pre id="promptText">Act as a startup ideation and market-screening advisor for a three-founder
+              <button class="copy-btn" data-copy-target="promptTextA">Copy</button>
+              <pre id="promptTextA">Act as a startup ideation and market-screening advisor for a three-founder
 student team building a born-digital, born-global venture for a semester-long
 international business course project.
 
@@ -660,11 +660,165 @@ OUTPUT RULES
           </div>
         </section>
 
-        <!-- COMING SOON VIEWS -->
+        <!-- STEP B -->
         <section class="view" id="view-step-b">
-          <span class="badge-soon">Coming soon</span>
-          <h2>Step B — AI Market Intelligence Agent/Skill</h2>
-          <p class="lede">A configuration template and reusable prompt for the agent/workflow that pulls country evidence, scores your market-screening matrix, and flags what's missing, old, or unverifiable — posted once we reach this step in class.</p>
+          <span class="step-num">Assignment 1 · Section 2.3</span>
+          <h2>Step B — Build the AI Market Intelligence Agent/Skill</h2>
+          <p class="lede">Use this prompt to have an AI tool build you a reusable <strong>Skill</strong> — not a one-off answer — that screens candidate countries against seven required criteria, cites its sources, and can be re-run on demand for at least five dated monitoring runs before Assignment 1 is due.</p>
+
+          <div class="card">
+            <h3>Which AI tool do I need?</h3>
+            <p><strong>Claude Code is recommended</strong> for this step. Step A only needed a chat window because you were pasting the AI's answer straight into a document. Step B is different: you're asking the AI to actually build and save a small folder of files (a "Skill") on your computer — instructions, spreadsheet templates, and a script — that your team will reuse for five separate research sessions. That requires a tool that can create and save real files, which a plain chat window (ChatGPT, Claude, Gemini in a browser tab) cannot do on its own.</p>
+            <p>If your team doesn't have access to Claude Code, that's still fine — the prompt below has a built-in fallback: it tells the AI tool to give you the same file contents as copy-pasteable text blocks instead. It'll take a bit more manual copying and saving on your end, but you'll end up with the same Skill.</p>
+          </div>
+
+          <div class="card">
+            <h3>Get the files</h3>
+            <p>Download the prompt, and download the starter kit — a working set of empty templates and a tested scoring script, so your team isn't relying on the AI to write bug-free code from a blank page.</p>
+            <a class="download-btn" href="step-b-market-intelligence-skill-prompt.md" download>&#8595; Download Step B Market Intelligence Skill Prompt.md</a>
+            <a class="download-btn" href="market-intel-starter-kit.zip" download style="margin-left:10px;">&#8595; Download market-intel-starter-kit.zip</a>
+          </div>
+
+          <div class="card">
+            <h3>Before you paste this in</h3>
+            <p>Fill in these six fields, then paste the whole block below into your AI tool.</p>
+            <div class="field-list">
+              <div><code>[TEAM NAME / FOUNDER NAMES]</code> — who's asking</div>
+              <div><code>[VENTURE PROFILE]</code> — company name, mission, target customer, problem, product/service, revenue model, home base, born-global logic (pull this from your Step A decision)</div>
+              <div><code>[CANDIDATE COUNTRIES]</code> — at least 5, from at least 3 world regions, with a one-line reason each is in the pool</div>
+              <div><code>[WEIGHT FOR EACH CRITERION]</code> — the seven required criteria are pre-loaded; assign weights that total 100%</div>
+              <div><code>[ANY OTHER EVIDENCE SOURCES]</code> — leave blank if the standard list is enough</div>
+              <div><code>[TOOL TYPE]</code> — Claude Code (recommended) or chat-only</div>
+            </div>
+          </div>
+
+          <div class="card prompt-card">
+            <h3>The prompt</h3>
+            <div class="prompt-wrap">
+              <button class="copy-btn" data-copy-target="promptTextB">Copy</button>
+              <pre id="promptTextB">Act as a Global Market Intelligence Agent-builder for a three-founder student
+venture team building a born-digital, born-global company for a semester-long
+international business course project (IBA 250, Assignment 1, Step B).
+
+Your job in this session is NOT to screen the countries yourself. Your job is
+to build a reusable Skill — a versioned, auditable set of instructions and
+templates — that the founders can re-invoke on demand, and that will always
+reproduce the same evidence-gathering and scoring behavior when re-run with
+fresh data.
+
+VENTURE CONTEXT
+- Founders: [TEAM NAME / FOUNDER NAMES]
+- Venture profile: [VENTURE PROFILE — company name, mission, target customer,
+  problem, product/service, revenue model, home base, born-global logic]
+- Candidate countries to screen (at least 5, from at least 3 world regions):
+  [CANDIDATE COUNTRIES AND WHY EACH IS IN THE POOL]
+- Screening criteria and weights (must total 100%). Use these seven required
+  criteria exactly; you may add up to 2 venture-specific criteria only if
+  they materially improve the decision:
+  1. Market size & growth rate — weight: [ ]%
+  2. Market intensity (buying power) — weight: [ ]%
+  3. Consumption capacity — weight: [ ]%
+  4. Receptivity to imports — weight: [ ]%
+  5. Infrastructure for doing business — weight: [ ]%
+  6. Degree of economic freedom — weight: [ ]%
+  7. Country risk — weight: [ ]%
+  [ANY ADDED VENTURE-SPECIFIC CRITERIA AND THEIR WEIGHTS]
+- Permitted evidence sources:
+  - Public/open — you may search and fetch these live: globalEDGE, World Bank
+    Open Data, IMF, UNCTAD, ITU DataHub, OECD.
+  - University-library/paywalled — you cannot access these directly; the
+    founders will paste in tables or figures pulled from the library:
+    Statista, Euromonitor Passport, IBISWorld, MarketLine, Business Source
+    Complete.
+  - [ANY OTHER EVIDENCE SOURCES]
+- My tool type: [TOOL TYPE]
+
+WHAT TO BUILD
+If my tool type has file and skill-creation capability:
+Create a Skill (not an autonomous multi-step agent) at `skills/market-intel/`
+containing:
+1. `SKILL.md` — the reusable instruction set below, filled in with my venture
+   context above, governing every future run of this Skill.
+2. `templates/evidence-table.csv` — empty template, columns: indicator,
+   value, year/date, country, source, data-quality note.
+3. `templates/scorecard.csv` — empty template, columns: country, criterion,
+   weight, raw score (1-5), weighted score, evidence reference.
+4. `scripts/score_markets.py` — reads a filled-in scorecard.csv and outputs a
+   weighted total per country, a ranked table, and a ranked bar chart. It
+   must only aggregate what's in the file — never invent or estimate a score.
+5. `logs/change_log.md` — empty template, columns: run date,
+   indicator/country changed, old value, new value, affects ranking
+   (yes/no/unclear), founder note.
+6. `logs/founder_decision_log.md` — empty template, columns: run date, AI
+   recommendation, founder decision (accepted/rejected/modified), reason.
+7. `README.md` inside the skill folder explaining how to re-invoke the Skill
+   for a new monitoring run and where each output file goes.
+
+If my tool type is chat-only:
+Give me the same file contents as labeled code blocks I can save myself, plus
+the SKILL.md as a single reusable prompt I can paste at the start of every
+new monitoring-run conversation.
+
+SKILL.md CONTENT — fill in my bracketed context above, then use this as the
+literal governing instructions:
+
+  Act as our Global Market Intelligence Analyst for [VENTURE NAME]. Use only
+  the evidence sources listed above, or sources you can open and verify
+  live. For every factual or quantitative claim, return the source and
+  year/date. Never invent a missing number, statistic, or citation — if you
+  cannot find or verify a value, write "not found / needs founder research"
+  instead of estimating it.
+
+  Apply the stated market-screening weights exactly and show the calculation
+  for every country (score x weight, summed to a total). No hidden scoring
+  logic.
+
+  Every response must follow this exact output structure, in this order:
+  1. Evidence snapshot — one table per country: indicator, value, year/date,
+     source, data-quality note (current / dated / estimate / unverifiable).
+  2. Screening score — weighted score by criterion and overall score per
+     country, arithmetic shown.
+  3. Opportunity interpretation — clearly labeled "AI INTERPRETATION," never
+     mixed into the evidence table above.
+  4. Risks/unknowns — missing data, contradictions, legal uncertainty, weak
+     proxies, or data older than 3 years.
+  5. Recommended next action — what the founders should investigate next,
+     phrased as a recommendation, not an instruction to act.
+  6. Change since prior run — compare this run's evidence table to the most
+     recent entry in logs/change_log.md (or state "first run" if none
+     exists), and flag only changes that could plausibly move the ranking.
+  7. Founder decision — leave this field BLANK. It is filled in by the
+     founders, never by the AI.
+
+  Freshness rule: always show the data's year. Flag anything older than 3
+  years as dated, even if it's the newest figure available.
+
+  Evidence rule: SOURCE FACTS and AI INTERPRETATION must never be mixed in
+  the same sentence or table cell.
+
+  Founder decision rule: recommend, do not decide. Never select a top market
+  for the founders. End every run by prompting them to fill in the Founder
+  decision log.
+
+AFTER YOU BUILD IT
+Explain in 3-5 sentences how to actually re-run this Skill for a new
+monitoring pass — what to paste in, what changes each time, and where each
+run's output should be saved — so the team can produce at least five dated
+monitoring runs before the assignment is due.</pre>
+            </div>
+          </div>
+
+          <div class="card">
+            <h3>After you run it</h3>
+            <ol>
+              <li>Save what your AI tool builds (the whole <code>skills/market-intel/</code> folder) into your team's project repository and screenshot the folder structure for your report's Section 5.</li>
+              <li>Do your first real run: fill in <code>templates/evidence-table.csv</code> and <code>templates/scorecard.csv</code> with real data from the permitted sources, then invoke the Skill. Log this run in the AI Use &amp; Founder Decision Log and the Evidence Ledger.</li>
+              <li>Fill in <code>logs/founder_decision_log.md</code> after every run — record what you accepted, rejected, or changed, and why, in your own words. The AI never fills this in for you.</li>
+              <li>Re-run the Skill on at least four more separate days before the assignment is due (five dated runs minimum). Each run should update <code>logs/change_log.md</code> with anything that changed since the prior run.</li>
+              <li>Use the resulting evidence table, scorecard, and change log directly in your report's Section 4 (Country Screening Model and Results) and Section 6 (Monitoring Results).</li>
+            </ol>
+            <p><strong>Reminder:</strong> this satisfies Step B of Assignment 1 (Section 2.3 of the project guide). It produces the tool — it does not replace the full Global Market Opportunity Assessment narrative, which is Step C.</p>
+          </div>
         </section>
 
         <section class="view" id="view-step-c">
@@ -685,10 +839,47 @@ OUTPUT RULES
           <p class="lede">Prompts supporting Assignment 3's refined exporting strategy and international marketing launch.</p>
         </section>
 
+        <!-- WORKED EXAMPLE -->
         <section class="view" id="view-worked-example">
-          <span class="badge-soon">Coming soon</span>
-          <h2>Worked Example</h2>
-          <p class="lede">A full run-through of this toolkit applied to one example company, mirroring the written-report worked example in the project guide.</p>
+          <span class="step-num">Reference</span>
+          <h2>Worked Example — PitchBridge AI</h2>
+          <p class="lede">A real run-through of Steps A and B, done by your professor as a practice company called PitchBridge AI, so you can see what finished output actually looks like before you produce your own. Nothing here is a template to copy — your ideas, countries, and numbers will be different.</p>
+
+          <div class="card">
+            <h3>Step A — five ideas, unscored</h3>
+            <p>PitchBridge AI is an AI role-play coach for high-stakes business conversations. Running the Step A prompt against that concept produced five distinct, comparable ideas — none picked as a winner:</p>
+            <ol>
+              <li><strong>PitchBridge Investor Coach</strong> — rehearse investor Q&amp;A with an AI that plays the tough investor.</li>
+              <li><strong>SalesFloor AI</strong> — rehearse cold/discovery sales calls against different buyer personas.</li>
+              <li><strong>CrossCultural Pitch Trainer</strong> — adapt one pitch across culturally distinct investor/buyer norms.</li>
+              <li><strong>CustomerConvo Coach</strong> — rehearse churn-save and price-objection conversations.</li>
+              <li><strong>Demo Day Dry-Run</strong> — a timed, rapid-fire Q&amp;A simulator ahead of a real demo day.</li>
+            </ol>
+            <p>Each idea came with a target customer, a one-sentence problem statement, a cross-border rationale, real competitors found through live web search (with an explicit "I'm not confident this one is a close match" flag where true), and pros/cons. Read the whole thing, unedited, in the download below.</p>
+            <a class="download-btn" href="worked-example-pitchbridgeai-step-a.md" download>&#8595; Download the full Step A output</a>
+          </div>
+
+          <div class="card">
+            <h3>Step B — the Skill's first run</h3>
+            <p>PitchBridge AI's Skill screened six candidate countries (Brazil, Indonesia, Mexico, India, Spain, Canada) against the seven required criteria, using only live public data — every figure sourced and dated, nothing invented.</p>
+            <img src="assets/pitchbridgeai-step-b-chart.png" alt="Bar chart: PitchBridge AI weighted country screening totals — Canada 3.36, Spain 2.99, India 2.72, Mexico 2.16, Indonesia 2.09, Brazil 1.88" style="max-width:100%; border-radius:8px; border:1px solid var(--line); margin:6px 0 16px;">
+            <p><strong>Ranked:</strong> Canada (3.36) &gt; Spain (2.99) &gt; India (2.72) &gt; Mexico (2.16) &gt; Indonesia (2.09) &gt; Brazil (1.88).</p>
+            <p>This does <em>not</em> match the project guide's illustrative example (which shortlists Brazil, Indonesia, Mexico) — on purpose. The guide's numbers are labeled placeholders; this run used real data and a disclosed scoring method, and a general-purpose scorecard structurally favors large, wealthy economies. The Skill flagged this itself, in its own Risks/Unknowns section, rather than presenting the ranking as clean:</p>
+            <ul>
+              <li>Total population is a weak, generic proxy for "market size" — PitchBridge sells to founders and small-business owners, not to the general population, so it overweights India.</li>
+              <li>"Consumption capacity" was an AI-derived estimate, not an independently published figure, and it duplicated the infrastructure criterion instead of measuring something distinct.</li>
+              <li>Country risk used only one governance sub-indicator, omitting inflation/FX volatility and rule of law.</li>
+              <li>India's internet-use figure was a year older than the other five countries' data.</li>
+              <li>No paywalled library-database evidence (Statista, Euromonitor, etc.) was included yet — only public sources.</li>
+            </ul>
+            <p>The Skill's own recommended next action: replace the population-based proxy with a venture-specific one (SME/startup counts, accelerator density), broaden the country-risk measure, and add at least one library-database data point per shortlisted country — before this feeds into Step C. The founders, not the AI, decide what to do with that.</p>
+            <a class="download-btn" href="worked-example-pitchbridgeai-step-b.md" download>&#8595; Download the full Step B output</a>
+          </div>
+
+          <div class="card">
+            <h3>What this worked example is trying to show you</h3>
+            <p>The point isn't the ranking — it's that a careful AI run cites everything, shows its arithmetic, and actively argues against trusting its own weakest assumptions. If your own Step A or Step B output doesn't do that (real sources, dated evidence, explicit "here's what's shaky about this" flags), that's a sign to push your AI tool harder, not a sign to accept what it gave you.</p>
+          </div>
         </section>
 
       </main>
@@ -758,17 +949,20 @@ OUTPUT RULES
   const initial = (location.hash || "#overview").slice(1);
   if (document.getElementById("view-" + initial)) showView(initial);
 
-  // ---- Copy prompt ----
-  const copyBtn = document.getElementById("copyBtn");
-  copyBtn.addEventListener("click", async () => {
-    try {
-      await navigator.clipboard.writeText(document.getElementById("promptText").textContent);
-      copyBtn.textContent = "Copied";
-      setTimeout(() => (copyBtn.textContent = "Copy"), 1600);
-    } catch (err) {
-      copyBtn.textContent = "Select & copy manually";
-      setTimeout(() => (copyBtn.textContent = "Copy"), 2000);
-    }
+  // ---- Copy prompt (works for any number of prompt blocks) ----
+  document.querySelectorAll(".copy-btn[data-copy-target]").forEach((btn) => {
+    btn.addEventListener("click", async () => {
+      const target = document.getElementById(btn.dataset.copyTarget);
+      if (!target) return;
+      try {
+        await navigator.clipboard.writeText(target.textContent);
+        btn.textContent = "Copied";
+        setTimeout(() => (btn.textContent = "Copy"), 1600);
+      } catch (err) {
+        btn.textContent = "Select & copy manually";
+        setTimeout(() => (btn.textContent = "Copy"), 2000);
+      }
+    });
   });
 
   // ---- Footer date ----
