@@ -52,6 +52,18 @@ script entirely, keep the CSV files as your evidence record (open them in
 Excel or Google Sheets if that's easier), and use the numbers your AI tool
 already printed. Nothing else in this workflow depends on Python.
 
+## Important: building the Skill and running it are two different steps
+
+The prompt below only does the first one. Read its opening line again:
+*"Your job in this session is NOT to screen the countries yourself. Your job
+is to build a reusable Skill."* That's deliberate — it keeps the Skill's
+instructions separate from any one run's data. But it means that pasting
+this prompt alone will **not** produce an evidence table, a scorecard, or
+any country data. You'll get a folder of files and nothing to analyze yet —
+that's expected, not a bug. To actually get data, you must separately paste
+the second, shorter prompt in **"Invoke it for a real run"** below, in the
+same session, right after the build finishes.
+
 ## Before you paste this in
 
 Fill in these six fields. Everything else in the prompt stays as written —
@@ -72,7 +84,7 @@ in every team's submission.
 - `[TOOL TYPE]` — Claude Code with file, web-search, and skill-creation tools
   (recommended), or chat-only if that's what you have access to
 
-## The prompt
+## The prompt (step 1 of 2 — builds the Skill, does not run it)
 
 ```
 Act as a Global Market Intelligence Agent-builder for a three-founder student
@@ -190,20 +202,51 @@ run's output should be saved — so the team can produce at least five dated
 monitoring runs before the assignment is due.
 ```
 
+## Invoke it for a real run (step 2 of 2 — this is what produces data)
+
+Paste this in the **same session**, right after step 1 finishes building the
+Skill (or in any later session, with the `skills/market-intel/` folder open,
+to do a new dated monitoring run):
+
+```
+Using skills/market-intel/SKILL.md as the governing instructions, run a real
+monitoring pass now — do not just describe how to do this, actually do it.
+
+1. Fetch current, sourced evidence for every candidate country from the
+   permitted public/open sources (search and fetch them live).
+2. If I've pasted in any paywalled library-database data in this
+   conversation, incorporate it too.
+3. Save this run's evidence table and scorecard as new dated files under
+   skills/market-intel/runs/ (e.g., runs/<YYYY-MM-DD>-evidence-table.csv and
+   runs/<YYYY-MM-DD>-scorecard.csv), following the templates.
+4. Show me the full seven-block output in your response, exactly as
+   SKILL.md's "Required output structure" specifies — evidence snapshot,
+   screening score with arithmetic shown, opportunity interpretation,
+   risks/unknowns, recommended next action, change since prior run, and a
+   blank founder decision field for us to fill in.
+```
+
+If you have paywalled library-database figures (Statista, Euromonitor
+Passport, IBISWorld, MarketLine, Business Source Complete) to add, paste
+them into the chat right before this prompt, in the same message or the one
+before it, so the AI can fold them into the run.
+
 ## After you run it
 
 1. Save what Claude Code builds (the whole `skills/market-intel/` folder) into
    your team's project repository and screenshot the folder structure for
    your report's Section 5.
-2. Do your first real run: fill in `templates/evidence-table.csv` and
-   `templates/scorecard.csv` with real data from the permitted sources, then
-   invoke the Skill. Log this run in the **AI Use & Founder Decision Log** and
-   the **Evidence Ledger**.
+2. Right after the build finishes, paste the **"Invoke it for a real run"**
+   prompt above in the same session — that's what actually produces your
+   first evidence table and scorecard. (Building the Skill alone will not
+   return any data.) Log this run in the **AI Use & Founder Decision Log**
+   and the **Evidence Ledger**.
 3. Fill in `logs/founder_decision_log.md` after every run — record what you
    accepted, rejected, or changed, and why, in your own words.
-4. Re-run the Skill on at least four more separate days before the assignment
-   is due (five dated runs minimum). Each run should update
-   `logs/change_log.md` with anything that changed since the prior run.
+4. Re-run the Skill (paste the "Invoke it" prompt again) on at least four
+   more separate days before the assignment is due (five dated runs
+   minimum). Each run should update `logs/change_log.md` with anything that
+   changed since the prior run.
 5. Use the resulting evidence table, scorecard, and change log directly in
    your report's Section 4 (Country Screening Model and Results) and Section
    6 (Monitoring Results).

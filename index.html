@@ -691,6 +691,11 @@ OUTPUT RULES
             <p>The prompt below has your AI tool build one optional file, <code>scripts/score_markets.py</code>, that double-checks the weighted-score math and draws a bar chart &mdash; for teams that already have Python installed. <strong>You do not need it to complete Step B.</strong> The required output format already has the AI show the weighted-score calculation directly in its chat response for every run; that alone satisfies &ldquo;reproduce the market-screening logic consistently.&rdquo; If <code>python3</code> isn&rsquo;t installed on your computer, skip the script entirely, keep the CSV files as your evidence record (open them in Excel or Google Sheets if that&rsquo;s easier), and use the numbers your AI tool already printed. Nothing else in this workflow depends on Python.</p>
           </div>
 
+          <div class="card" style="border-color:#c86a3d;">
+            <h3>Building the Skill and running it are two different steps</h3>
+            <p>The prompt below only does the first one. Read its opening line: <em>&ldquo;Your job in this session is NOT to screen the countries yourself. Your job is to build a reusable Skill.&rdquo;</em> That's deliberate. But it means pasting this prompt alone will <strong>not</strong> produce an evidence table, a scorecard, or any country data &mdash; you'll get a folder of files and nothing to analyze yet. That's expected, not a bug. To get real data, paste the second, shorter prompt under &ldquo;Invoke it for a real run&rdquo; below, in the same session, right after the build finishes.</p>
+          </div>
+
           <div class="card">
             <h3>Before you paste this in</h3>
             <p>Fill in these six fields, then paste the whole block below into your AI tool.</p>
@@ -705,7 +710,7 @@ OUTPUT RULES
           </div>
 
           <div class="card prompt-card">
-            <h3>The prompt</h3>
+            <h3>The prompt (step 1 of 2 &mdash; builds the Skill, does not run it)</h3>
             <div class="prompt-wrap">
               <button class="copy-btn" data-copy-target="promptTextB">Copy</button>
               <pre id="promptTextB">Act as a Global Market Intelligence Agent-builder for a three-founder student
@@ -824,13 +829,37 @@ monitoring runs before the assignment is due.</pre>
             </div>
           </div>
 
+          <div class="card prompt-card">
+            <h3>Invoke it for a real run (step 2 of 2 &mdash; this is what produces data)</h3>
+            <p>Paste this in the <strong>same session</strong>, right after step 1 finishes building the Skill (or in any later session, with the <code>skills/market-intel/</code> folder open, to do a new dated monitoring run):</p>
+            <div class="prompt-wrap">
+              <button class="copy-btn" data-copy-target="promptTextB2">Copy</button>
+              <pre id="promptTextB2">Using skills/market-intel/SKILL.md as the governing instructions, run a real
+monitoring pass now — do not just describe how to do this, actually do it.
+
+1. Fetch current, sourced evidence for every candidate country from the
+   permitted public/open sources (search and fetch them live).
+2. If I've pasted in any paywalled library-database data in this
+   conversation, incorporate it too.
+3. Save this run's evidence table and scorecard as new dated files under
+   skills/market-intel/runs/ (e.g., runs/&lt;YYYY-MM-DD&gt;-evidence-table.csv and
+   runs/&lt;YYYY-MM-DD&gt;-scorecard.csv), following the templates.
+4. Show me the full seven-block output in your response, exactly as
+   SKILL.md's "Required output structure" specifies — evidence snapshot,
+   screening score with arithmetic shown, opportunity interpretation,
+   risks/unknowns, recommended next action, change since prior run, and a
+   blank founder decision field for us to fill in.</pre>
+            </div>
+            <p>If you have paywalled library-database figures (Statista, Euromonitor Passport, IBISWorld, MarketLine, Business Source Complete) to add, paste them into the chat right before this prompt, in the same message or the one before it, so the AI can fold them into the run.</p>
+          </div>
+
           <div class="card">
             <h3>After you run it</h3>
             <ol>
               <li>Save what your AI tool builds (the whole <code>skills/market-intel/</code> folder) into your team's project repository and screenshot the folder structure for your report's Section 5.</li>
-              <li>Do your first real run: fill in <code>templates/evidence-table.csv</code> and <code>templates/scorecard.csv</code> with real data from the permitted sources, then invoke the Skill. Log this run in the AI Use &amp; Founder Decision Log and the Evidence Ledger.</li>
+              <li>Right after the build finishes, paste the <strong>&ldquo;Invoke it for a real run&rdquo;</strong> prompt above in the same session &mdash; that's what actually produces your first evidence table and scorecard. (Building the Skill alone will not return any data.) Log this run in the AI Use &amp; Founder Decision Log and the Evidence Ledger.</li>
               <li>Fill in <code>logs/founder_decision_log.md</code> after every run — record what you accepted, rejected, or changed, and why, in your own words. The AI never fills this in for you.</li>
-              <li>Re-run the Skill on at least four more separate days before the assignment is due (five dated runs minimum). Each run should update <code>logs/change_log.md</code> with anything that changed since the prior run.</li>
+              <li>Re-run the Skill (paste the &ldquo;Invoke it&rdquo; prompt again) on at least four more separate days before the assignment is due (five dated runs minimum). Each run should update <code>logs/change_log.md</code> with anything that changed since the prior run.</li>
               <li>Use the resulting evidence table, scorecard, and change log directly in your report's Section 4 (Country Screening Model and Results) and Section 6 (Monitoring Results).</li>
             </ol>
             <p><strong>Reminder:</strong> this satisfies Step B of Assignment 1 (Section 2.3 of the project guide). It produces the tool — it does not replace the full Global Market Opportunity Assessment narrative, which is Step C.</p>
