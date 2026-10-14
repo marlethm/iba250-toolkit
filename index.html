@@ -400,11 +400,6 @@
     color: var(--paper-raised) !important;
   }
   .download-btn:hover { filter: brightness(1.08); }
-  .download-row {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 10px;
-  }
 
   .badge-soon {
     display: inline-block;
@@ -487,13 +482,16 @@
           <li><button data-view="step-c">Step C · Market Opportunity</button></li>
 
           <div class="stage-label">Stage 2 — Choose Markets</div>
-          <li><button data-view="stage-2">Entry Mode & Culture <span class="tag">Soon</span></button></li>
+          <li><button data-view="step-d">Step D · Entry Mode</button></li>
+          <li><button data-view="step-e">Step E · Political/Legal/Econ</button></li>
+          <li><button data-view="step-f">Step F · Cultural Analysis</button></li>
 
           <div class="stage-label">Stage 3 — Launch</div>
           <li><button data-view="stage-3">Export & Launch <span class="tag">Soon</span></button></li>
 
           <div class="stage-label">Reference</div>
-          <li><button data-view="worked-example">Worked Example</button></li>
+          <li><button data-view="worked-example">Worked Example · Stage 1</button></li>
+          <li><button data-view="worked-example-stage-2">Worked Example · Stage 2</button></li>
         </ul>
       </nav>
 
@@ -678,22 +676,20 @@ OUTPUT RULES
           </div>
 
           <div class="card">
-            <h3>Get the files</h3>
-            <p>Download the prompt, and download the starter kit — a working set of empty templates and a tested scoring script, so your team isn't relying on the AI to write bug-free code from a blank page.</p>
-            <div class="download-row">
-              <a class="download-btn" href="step-b-market-intelligence-skill-prompt.md" download>&#8595; Download Step B Market Intelligence Skill Prompt.md</a>
-              <a class="download-btn" href="market-intel-starter-kit.zip" download>&#8595; Download market-intel-starter-kit.zip</a>
-            </div>
+            <h3>No Python required</h3>
+            <p>The prompt below has your AI tool build one optional file, <code>scripts/score_markets.py</code>, that double-checks the weighted-score math and draws a bar chart — for teams that already have Python installed. <strong>You do not need it to complete Step B.</strong> The required output format already has the AI show the weighted-score calculation directly in its chat response for every run; that alone satisfies "reproduce the market-screening logic consistently." If <code>python3</code> isn't installed on your computer, skip the script entirely, keep the CSV files as your evidence record (open them in Excel or Google Sheets if that's easier), and use the numbers your AI tool already printed. Nothing else in this workflow depends on Python.</p>
           </div>
 
           <div class="card">
-            <h3>No Python required</h3>
-            <p>The prompt below has your AI tool build one optional file, <code>scripts/score_markets.py</code>, that double-checks the weighted-score math and draws a bar chart &mdash; for teams that already have Python installed. <strong>You do not need it to complete Step B.</strong> The required output format already has the AI show the weighted-score calculation directly in its chat response for every run; that alone satisfies &ldquo;reproduce the market-screening logic consistently.&rdquo; If <code>python3</code> isn&rsquo;t installed on your computer, skip the script entirely, keep the CSV files as your evidence record (open them in Excel or Google Sheets if that&rsquo;s easier), and use the numbers your AI tool already printed. Nothing else in this workflow depends on Python.</p>
+            <h3>Important: building the Skill and running it are two different steps</h3>
+            <p>The first prompt below only does the first one. Read its opening line again: <em>"Your job in this session is NOT to screen the countries yourself. Your job is to build a reusable Skill."</em> That's deliberate — it keeps the Skill's instructions separate from any one run's data. But it means that pasting that prompt alone will <strong>not</strong> produce an evidence table, a scorecard, or any country data. You'll get a folder of files and nothing to analyze yet — that's expected, not a bug. To actually get data, you must separately paste the second, shorter prompt in <strong>"Invoke it for a real run"</strong> below, in the same session, right after the build finishes.</p>
           </div>
 
-          <div class="card" style="border-color:#c86a3d;">
-            <h3>Building the Skill and running it are two different steps</h3>
-            <p>The prompt below only does the first one. Read its opening line: <em>&ldquo;Your job in this session is NOT to screen the countries yourself. Your job is to build a reusable Skill.&rdquo;</em> That's deliberate. But it means pasting this prompt alone will <strong>not</strong> produce an evidence table, a scorecard, or any country data &mdash; you'll get a folder of files and nothing to analyze yet. That's expected, not a bug. To get real data, paste the second, shorter prompt under &ldquo;Invoke it for a real run&rdquo; below, in the same session, right after the build finishes.</p>
+          <div class="card">
+            <h3>Get the files</h3>
+            <p>Download the prompt, and download the starter kit — a working set of empty templates and a tested scoring script, so your team isn't relying on the AI to write bug-free code from a blank page.</p>
+            <a class="download-btn" href="step-b-market-intelligence-skill-prompt.md" download>&#8595; Download Step B Market Intelligence Skill Prompt.md</a>
+            <a class="download-btn" href="market-intel-starter-kit.zip" download style="margin-left:10px;">&#8595; Download market-intel-starter-kit.zip</a>
           </div>
 
           <div class="card">
@@ -710,7 +706,7 @@ OUTPUT RULES
           </div>
 
           <div class="card prompt-card">
-            <h3>The prompt (step 1 of 2 &mdash; builds the Skill, does not run it)</h3>
+            <h3>The prompt (step 1 of 2 — builds the Skill, does not run it)</h3>
             <div class="prompt-wrap">
               <button class="copy-btn" data-copy-target="promptTextB">Copy</button>
               <pre id="promptTextB">Act as a Global Market Intelligence Agent-builder for a three-founder student
@@ -808,6 +804,10 @@ literal governing instructions:
   6. Change since prior run — compare this run's evidence table to the most
      recent entry in logs/change_log.md (or state "first run" if none
      exists), and flag only changes that could plausibly move the ranking.
+     Also confirm every indicator you used this run matches the Locked
+     indicator list below; if any differs, flag it explicitly as
+     "METHODOLOGY CHANGE" (not an ordinary data update) and explain why
+     before showing any resulting score change.
   7. Founder decision — leave this field BLANK. It is filled in by the
      founders, never by the AI.
 
@@ -821,6 +821,28 @@ literal governing instructions:
   for the founders. End every run by prompting them to fill in the Founder
   decision log.
 
+  Locked indicator list: on the first real run, choose one specific, named
+  indicator per criterion (e.g., "GDP, current US$, World Bank" or "GDP
+  growth rate, annual %, World Bank" for Market size & growth — not a vague
+  proxy like population alone) and record all seven, plus any
+  venture-specific criteria, in this list:
+  1. Market size & growth rate — indicator: [blank until first run]
+  2. Market intensity (buying power) — indicator: [blank until first run]
+  3. Consumption capacity — indicator: [blank until first run]
+  4. Receptivity to imports — indicator: [blank until first run]
+  5. Infrastructure for doing business — indicator: [blank until first run]
+  6. Degree of economic freedom — indicator: [blank until first run]
+  7. Country risk — indicator: [blank until first run]
+  [any venture-specific criteria] — indicator: [blank until first run]
+
+  Indicator consistency rule: every run after the first must reuse these
+  exact named indicators — never substitute a different one, even a better
+  one, without saying so. Swapping indicators is a METHODOLOGY CHANGE, not a
+  routine data update. If you believe a locked indicator should change, say
+  so under "Recommended next action," label it "METHODOLOGY CHANGE — needs
+  founder approval," and wait for the founders to approve it and update this
+  list themselves before you use it.
+
 AFTER YOU BUILD IT
 Explain in 3-5 sentences how to actually re-run this Skill for a new
 monitoring pass — what to paste in, what changes each time, and where each
@@ -830,36 +852,42 @@ monitoring runs before the assignment is due.</pre>
           </div>
 
           <div class="card prompt-card">
-            <h3>Invoke it for a real run (step 2 of 2 &mdash; this is what produces data)</h3>
-            <p>Paste this in the <strong>same session</strong>, right after step 1 finishes building the Skill (or in any later session, with the <code>skills/market-intel/</code> folder open, to do a new dated monitoring run):</p>
+            <h3>Invoke it for a real run (step 2 of 2 — this is what produces data)</h3>
+            <p>Paste this in the <strong>same session</strong>, right after step 1 finishes building the Skill (or in any later session, with the <code>skills/market-intel/</code> folder open, to do a new dated monitoring run). If you have paywalled library-database figures (Statista, Euromonitor Passport, IBISWorld, MarketLine, Business Source Complete) to add, paste them into the chat right before this prompt, in the same message or the one before it, so the AI can fold them into the run.</p>
             <div class="prompt-wrap">
-              <button class="copy-btn" data-copy-target="promptTextB2">Copy</button>
-              <pre id="promptTextB2">Using skills/market-intel/SKILL.md as the governing instructions, run a real
+              <button class="copy-btn" data-copy-target="promptTextBInvoke">Copy</button>
+              <pre id="promptTextBInvoke">Using skills/market-intel/SKILL.md as the governing instructions, run a real
 monitoring pass now — do not just describe how to do this, actually do it.
 
-1. Fetch current, sourced evidence for every candidate country from the
-   permitted public/open sources (search and fetch them live).
-2. If I've pasted in any paywalled library-database data in this
+1. Check SKILL.md's Locked indicator list. If this is truly the first run
+   and it's still blank, choose one specific, named indicator per criterion
+   now and fill in that list in SKILL.md before proceeding. If it's already
+   filled in from an earlier run, reuse those exact same indicators — do not
+   pick different or "better" ones on your own.
+2. Fetch current, sourced evidence for every candidate country, for those
+   exact locked indicators, from the permitted public/open sources (search
+   and fetch them live).
+3. If I've pasted in any paywalled library-database data in this
    conversation, incorporate it too.
-3. Save this run's evidence table and scorecard as new dated files under
-   skills/market-intel/runs/ (e.g., runs/&lt;YYYY-MM-DD&gt;-evidence-table.csv and
-   runs/&lt;YYYY-MM-DD&gt;-scorecard.csv), following the templates.
-4. Show me the full seven-block output in your response, exactly as
+4. Save this run's evidence table and scorecard as new dated files under
+   skills/market-intel/runs/ (e.g., runs/<YYYY-MM-DD>-evidence-table.csv and
+   runs/<YYYY-MM-DD>-scorecard.csv), following the templates.
+5. Show me the full seven-block output in your response, exactly as
    SKILL.md's "Required output structure" specifies — evidence snapshot,
    screening score with arithmetic shown, opportunity interpretation,
-   risks/unknowns, recommended next action, change since prior run, and a
-   blank founder decision field for us to fill in.</pre>
+   risks/unknowns, recommended next action, change since prior run (including
+   the indicator-consistency check), and a blank founder decision field for
+   us to fill in.</pre>
             </div>
-            <p>If you have paywalled library-database figures (Statista, Euromonitor Passport, IBISWorld, MarketLine, Business Source Complete) to add, paste them into the chat right before this prompt, in the same message or the one before it, so the AI can fold them into the run.</p>
           </div>
 
           <div class="card">
             <h3>After you run it</h3>
             <ol>
               <li>Save what your AI tool builds (the whole <code>skills/market-intel/</code> folder) into your team's project repository and screenshot the folder structure for your report's Section 5.</li>
-              <li>Right after the build finishes, paste the <strong>&ldquo;Invoke it for a real run&rdquo;</strong> prompt above in the same session &mdash; that's what actually produces your first evidence table and scorecard. (Building the Skill alone will not return any data.) Log this run in the AI Use &amp; Founder Decision Log and the Evidence Ledger.</li>
+              <li>Right after the build finishes, paste the <strong>"Invoke it for a real run"</strong> prompt above in the same session — that's what actually produces your first evidence table and scorecard. (Building the Skill alone will not return any data.) Log this run in the AI Use &amp; Founder Decision Log and the Evidence Ledger.</li>
               <li>Fill in <code>logs/founder_decision_log.md</code> after every run — record what you accepted, rejected, or changed, and why, in your own words. The AI never fills this in for you.</li>
-              <li>Re-run the Skill (paste the &ldquo;Invoke it&rdquo; prompt again) on at least four more separate days before the assignment is due (five dated runs minimum). Each run should update <code>logs/change_log.md</code> with anything that changed since the prior run.</li>
+              <li>Re-run the Skill (paste the "Invoke it" prompt again) on at least four more separate days before the assignment is due (five dated runs minimum). Each run should update <code>logs/change_log.md</code> with anything that changed since the prior run.</li>
               <li>Use the resulting evidence table, scorecard, and change log directly in your report's Section 4 (Country Screening Model and Results) and Section 6 (Monitoring Results).</li>
             </ol>
             <p><strong>Reminder:</strong> this satisfies Step B of Assignment 1 (Section 2.3 of the project guide). It produces the tool — it does not replace the full Global Market Opportunity Assessment narrative, which is Step C.</p>
@@ -880,10 +908,8 @@ monitoring pass now — do not just describe how to do this, actually do it.
           <div class="card">
             <h3>Get the files</h3>
             <p>Download the prompt, and download the sales-funnel calculator — a small, tested tool for Task 6 so your revenue estimate has visible, checkable arithmetic instead of one asserted number.</p>
-            <div class="download-row">
-              <a class="download-btn" href="step-c-global-market-opportunity-assessment-prompt.md" download>&#8595; Download Step C Global Market Opportunity Assessment Prompt.md</a>
-              <a class="download-btn" href="sales-funnel-calculator.zip" download>&#8595; Download sales-funnel-calculator.zip</a>
-            </div>
+            <a class="download-btn" href="step-c-global-market-opportunity-assessment-prompt.md" download>&#8595; Download Step C Global Market Opportunity Assessment Prompt.md</a>
+            <a class="download-btn" href="sales-funnel-calculator.zip" download style="margin-left:10px;">&#8595; Download sales-funnel-calculator.zip</a>
           </div>
 
           <div class="card">
@@ -893,7 +919,7 @@ monitoring pass now — do not just describe how to do this, actually do it.
               <div><code>[TEAM NAME / FOUNDER NAMES]</code> — who's asking</div>
               <div><code>[VENTURE PROFILE]</code> — same profile you used for Step B</div>
               <div><code>[FOUNDER READINESS INPUTS]</code> — your team's real financial resources, skills, weekly time available, data access, support capacity, cybersecurity/privacy capability, and time-zone coverage</div>
-              <div><code>[STEP B SCORECARD RESULTS]</code> — paste your most recent Step B Skill run's evidence table and ranked scorecard</div>
+              <div><code>[STEP B SCORECARD RESULTS]</code> — paste your most recent Step B Skill run's evidence table and ranked scorecard — the actual most recent one, not a summary from memory or an earlier run. If you're running this in Claude Code with your project folder open, it's fine to say so instead and let the AI check <code>skills/market-intel/runs/</code> for the latest dated run itself.</div>
               <div><code>[PRICING / MONETIZATION ASSUMPTIONS]</code> — your current thinking on price and monetization, or say "none yet"</div>
               <div><code>[TOOL TYPE]</code> — chat-only is fine, or Claude Code if you want it reading your Step B files directly</div>
             </div>
@@ -964,7 +990,20 @@ from the table.
 
 TASK 3 — Screen countries to identify target markets
 Do NOT re-screen the countries from scratch. Reconcile and build on the
-pasted Step B scorecard results above:
+pasted Step B scorecard results above — but first check for drift:
+- If you have file access to this project (e.g., Claude Code with the
+  skills/market-intel/ folder open) and a more recent dated run exists under
+  skills/market-intel/runs/ than the one pasted above, use that most recent
+  run instead, and say plainly that you did so and which dates are involved.
+- Compare the indicators actually used (in the pasted results, or the most
+  recent run file) against skills/market-intel/SKILL.md's Locked indicator
+  list, if one exists. If they don't match — for example, the pasted or
+  most-recent run used a different underlying indicator for a criterion than
+  what SKILL.md currently has locked — flag this explicitly as
+  "METHODOLOGY-DRIFT," separate from and more serious than ordinary
+  staleness, because it means the ranking is not directly comparable across
+  runs. Recommend re-running the Step B Skill under the currently locked
+  indicators before trusting the shortlist.
 - Reproduce the ranked scorecard (all 7 required criteria: market size &
   growth, market intensity, consumption capacity, receptivity to imports,
   infrastructure, economic freedom, country risk — plus any venture-specific
@@ -1027,10 +1066,417 @@ OUTPUT RULES
           </div>
         </section>
 
-        <section class="view" id="view-stage-2">
-          <span class="badge-soon">Coming soon</span>
-          <h2>Stage 2 — Entry Mode, Political/Legal, and Cultural Analysis</h2>
-          <p class="lede">Prompts for the entry-mode decision framework and the cross-cultural comparison work in Assignment 2.</p>
+        <!-- STEP D -->
+        <section class="view" id="view-step-d">
+          <span class="step-num">Assignment 2 · Section 3.2</span>
+          <h2>Step D — Entry Mode Decision Framework</h2>
+          <p class="lede">The first of Stage 2's three steps: decide which country or countries from your Step C shortlist carry forward, and justify your entry mode using control requirements, flexibility/resource commitment, and dissemination risk.</p>
+
+          <div class="card">
+            <h3>Before you start: Stage 2 has three steps, in order</h3>
+            <p>Assignment 2 has three parts, split into three pages here so you can work through them one at a time: <strong>Step D (this page)</strong> decides where and how you're entering; <strong>Step E</strong> is the quantitative political/legal/economic analysis of the countries you pick here; <strong>Step F</strong> is the cultural analysis and comparative table for the same countries, plus the social-media requirement. Do them in this order — Steps E and F both assume you already know which countries you're analyzing.</p>
+          </div>
+
+          <div class="card">
+            <h3>Get the file</h3>
+            <p>Download the prompt, or scroll down and use the "Copy" button on the prompt box instead.</p>
+            <a class="download-btn" href="step-d-entry-mode-decision-prompt.md" download>&#8595; Download Step D Entry Mode Decision Prompt.md</a>
+          </div>
+
+          <div class="card">
+            <h3>Before you paste this in</h3>
+            <p>Fill in these six fields, then paste the whole block below into your AI tool.</p>
+            <div class="field-list">
+              <div><code>[TEAM NAME / FOUNDER NAMES]</code> — who's asking</div>
+              <div><code>[VENTURE PROFILE]</code> — same profile you used for Steps B and C</div>
+              <div><code>[STEP C RESULTS]</code> — your Step C Task 3 shortlist (top-3 countries) and the biggest open risk/unknown it flagged</div>
+              <div><code>[CONTROL REQUIREMENTS]</code> — how much control you need over brand, data, the AI model, pricing, IP, quality — and why</div>
+              <div><code>[RESOURCE & RISK CONSTRAINTS]</code> — real capital, staffing, time, and risk tolerance</div>
+              <div><code>[KNOW-HOW SENSITIVITY]</code> — what a partner could copy, learn, or misuse if you shared it with them</div>
+              <div><code>[TOOL TYPE]</code> — chat-only is fine, or Claude Code to read your Step C files directly</div>
+            </div>
+          </div>
+
+          <div class="card prompt-card">
+            <h3>The prompt</h3>
+            <div class="prompt-wrap">
+              <button class="copy-btn" data-copy-target="promptTextD">Copy</button>
+              <pre id="promptTextD">Act as our entry-mode strategy analyst for a three-founder student venture
+team building a born-digital, born-global company for a semester-long
+international business course project (IBA 250, Assignment 2, Step D). This
+step applies the entry-mode decision framework from the course textbook
+(control requirements, flexibility/resource commitment, dissemination risk)
+to the country shortlist our team already built in Assignment 1.
+
+VENTURE CONTEXT
+- Founders: [TEAM NAME / FOUNDER NAMES]
+- Venture profile: [VENTURE PROFILE]
+- Step C country-screening results (top-3 shortlist + biggest open
+  risk/unknown from our most recent run): [STEP C RESULTS]
+- Our control requirements (real, specific — do not generalize these):
+  [CONTROL REQUIREMENTS]
+- Our resource and risk constraints: [RESOURCE & RISK CONSTRAINTS]
+- Sensitivity of our know-how to disclosure/imitation: [KNOW-HOW SENSITIVITY]
+- My tool type: [TOOL TYPE]
+
+EVIDENCE RULES
+- Treat the founder-supplied context above as evidence, not something to
+  invent around. Every cell in the table below must be traceable to either
+  that founder input or a cited, dated source — never a generic assumption
+  about "most companies" or "most markets."
+- Do not select or rank entry modes or countries beyond what the framework
+  below produces. Recommend; do not decide. The founders make the final call.
+
+TASK 1 — Link to Stage 1
+In one short paragraph: state which country or countries from the Step C
+shortlist we are carrying forward into Stage 2, explain what Stage 1 evidence
+carries forward unchanged, note anything that has changed since that evidence
+was gathered, and explain — without rejecting it outright — why any
+shortlisted country is being deferred rather than pursued right now.
+
+TASK 2 — Entry mode decision
+Build this exact table, reasoning through each variable set using the founder
+context above as evidence:
+
+| Variable | Assessment for our firm (evidence) | Pushes toward (more/less control) |
+|---|---|---|
+| Strategic / control requirements: multi-domestic vs. global strategy; global concentration | | |
+| Environmental / flexibility: country risk; psychic distance; demand uncertainty; competitive volatility | | |
+| Transaction / dissemination risk: value and tacitness of our know-how | | |
+| Conclusion: entry mode chosen and why | | |
+
+Rules for this table:
+- For a 100% digitally delivered firm, evaluate direct digital exporting as
+  the default entry mode. If you recommend anything else (joint venture,
+  licensing/franchising, wholly owned subsidiary), you must explicitly justify
+  why direct digital exporting is insufficient for this specific venture —
+  do not drift away from the digital-exporting default without a stated
+  reason tied to the founder context above.
+- In the Conclusion row, state plainly where this places the firm on the
+  control-resource commitment continuum (wholly-owned subsidiary -> joint
+  venture -> franchising/licensing -> exporting), and which specific
+  activities stay centralized (kept inside the firm) versus which get
+  localized or handed to a partner.
+
+TASK 3 — Team interpretation
+Add one paragraph explaining why this entry mode fits this specific venture
+at this specific stage — not a generic restatement of entry-mode theory.
+Reference the actual control/resource/dissemination-risk tradeoffs from the
+table above.
+
+OUTPUT RULES
+- Every table cell is either evidence-based (traceable to a founder input
+  above or a cited source) or explicitly labeled "not found / needs founder
+  research" — never a silent guess.
+- Do not just list entry modes from the textbook — explain why the chosen
+  one fits this venture, using the table's own logic.</pre>
+            </div>
+          </div>
+
+          <div class="card">
+            <h3>After you run it</h3>
+            <ol>
+              <li>Save the raw output and log it in the AI Use &amp; Founder Decision Log — note what you kept, changed, or rejected.</li>
+              <li>Use Task 1's output to write Section 2 (Link to Stage 1) of your report, and draw the selected countries and top reasons into Section 1 (Executive Decision Summary) — you'll finish Section 1 once Steps E and F are done and you have the full picture.</li>
+              <li>Use Tasks 2-3 directly as Section 3 (Entry Mode Decision) of your report.</li>
+              <li>Move to Step E once your entry-mode table is settled — it assumes you already know which country or countries you're analyzing.</li>
+            </ol>
+            <p><strong>Reminder:</strong> this satisfies Part A of Assignment 2 (Section 3.2 of the project guide). The rubric scores Entry mode decision at 10 of 60 points and Country selection at 4 more points.</p>
+          </div>
+        </section>
+
+        <!-- STEP E -->
+        <section class="view" id="view-step-e">
+          <span class="step-num">Assignment 2 · Section 3.3</span>
+          <h2>Step E — Political, Legal, and Economic Environment</h2>
+          <p class="lede">A narrative like "Country X has a stable economy and good technology" does not satisfy this step. This prompt forces at least eight cited, dated indicators per country, two sourced graphs per country, and one cross-country comparison figure.</p>
+
+          <div class="card">
+            <h3>Get the files</h3>
+            <p>Download the prompt, and download the starter kit — empty CSV templates for the required ten-row table and the figures each country needs, plus an optional charting script so your graphs come from real numbers you can verify.</p>
+            <a class="download-btn" href="step-e-political-legal-economic-analysis-prompt.md" download>&#8595; Download Step E Political/Legal/Economic Prompt.md</a>
+            <a class="download-btn" href="country-context-starter-kit.zip" download style="margin-left:10px;">&#8595; Download country-context-starter-kit.zip</a>
+          </div>
+
+          <div class="card">
+            <h3>Before you paste this in</h3>
+            <p>Fill in these five fields, then paste the whole block below into your AI tool.</p>
+            <div class="field-list">
+              <div><code>[TEAM NAME / FOUNDER NAMES]</code> — who's asking</div>
+              <div><code>[VENTURE PROFILE]</code> — same profile you used for Steps B, C, and D</div>
+              <div><code>[SELECTED COUNTRIES]</code> — the country or countries you settled on in Step D (at least one must be an emerging-market economy in the Global South, meaningfully different from the U.S. culturally)</div>
+              <div><code>[ANY OTHER EVIDENCE SOURCES]</code> — leave blank if the standard list is enough</div>
+              <div><code>[TOOL TYPE]</code> — chat-only is fine, or Claude Code to read your Step D files directly</div>
+            </div>
+          </div>
+
+          <div class="card prompt-card">
+            <h3>The prompt</h3>
+            <div class="prompt-wrap">
+              <button class="copy-btn" data-copy-target="promptTextE">Copy</button>
+              <pre id="promptTextE">Act as our political, legal, and economic country analyst for a
+three-founder student venture team building a born-digital, born-global
+company for a semester-long international business course project (IBA 250,
+Assignment 2, Step E). This step produces the quantitative country analysis
+that Step D's entry-mode decision depends on being accurate.
+
+VENTURE CONTEXT
+- Founders: [TEAM NAME / FOUNDER NAMES]
+- Venture profile: [VENTURE PROFILE]
+- Selected countries (from Step D): [SELECTED COUNTRIES]
+- Permitted evidence sources:
+  - Public/open — search and fetch these live: World Bank Open Data, World
+    Bank Worldwide Governance Indicators (WGI), IMF, OECD, national
+    statistics agencies and central banks for the countries above, and each
+    country's relevant data-privacy/consumer-protection regulator or
+    official legal-database site.
+  - University-library/paywalled — you cannot access these directly; the
+    founders will paste in tables or figures pulled from the library:
+    Statista, Euromonitor Passport, IBISWorld, MarketLine, Business Source
+    Complete.
+  - [ANY OTHER EVIDENCE SOURCES]
+- My tool type: [TOOL TYPE]
+
+EVIDENCE RULES
+- A narrative claim with no number, source, and year/date does not count as
+  evidence — "stable economy" or "good technology" is not acceptable on its
+  own. Every quantitative or legal claim needs a cited source and a
+  year/date.
+- Never invent or estimate a missing number or legal fact — write "not found
+  / needs founder research" instead.
+- Keep SOURCE FACTS and AI INTERPRETATION visibly separate — label
+  interpretation explicitly, never blend it into a table cell.
+- Do not select or rank countries beyond what Step D already decided — this
+  step analyzes the countries already chosen; it does not re-screen them.
+
+TASK 1 — Country tables
+For EACH selected country, produce this exact ten-row table:
+
+| Dimension / indicator | Findings with indicators (cite source & year) | What our firm must do to start operations |
+|---|---|---|
+| Political system / governance | | |
+| Rule of law / contract environment | | |
+| Data privacy | | |
+| Consumer / advertising / IP | | |
+| GDP / growth | | |
+| Inflation / GDP per capita | | |
+| Internet penetration | | |
+| Digital payments | | |
+| Taxes / registration for foreign digital services | | |
+| Country-risk summary | | |
+
+Minimum quantitative evidence per country (check off all of these — do not
+skip any):
+- At least eight decision-relevant indicators total across the table, each
+  with its value, year/date, source, and a plain-language interpretation.
+- At least one indicator/source for political/institutional conditions.
+- At least two economic indicators (e.g., GDP per capita, growth, inflation,
+  exchange-rate conditions, unemployment, income, or purchasing power).
+- At least two digital/market-access indicators relevant to THIS venture
+  specifically — not generic "internet exists" statements.
+- At least one legal/regulatory issue directly connected to our actual
+  product (data privacy, consumer protection, digital-services taxation, AI
+  regulation, advertising, IP, platform rules, or cross-border payments).
+
+After each country's table, add a one-sentence "So what?" statement
+explaining how that evidence would change a real launch decision — not a
+restatement of the table.
+
+TASK 2 — Figure data (for the required graphs)
+You cannot draw an image in this chat, so instead produce the underlying
+data table for each required figure, with a one-line caption, so the
+founders can chart it themselves (the starter kit's script or Excel/Google
+Sheets both work):
+- Two figures per country: pick the two indicators from Task 1 that most
+  clearly affect our launch decision and that have a trend worth showing
+  (e.g., internet penetration over several years, or an economic indicator
+  over time) — for each, give (year, value, source) rows.
+- One cross-country comparison figure: pick the two or three indicators most
+  decision-relevant to THIS venture specifically, and give (country,
+  indicator, value, year, source) rows comparing the selected countries
+  side by side.
+
+TASK 3 — Business Environment Synthesis
+Do a short PESTLE analysis, or complete this table identifying the three
+business-environment factors your team should monitor most closely during
+the first year of operations:
+
+| Area | Rating (1-5) | Strongest evidence | Main opportunity/risk | What our firm must do |
+|---|---|---|---|---|
+| Political/institutional environment | | | | |
+| Legal/regulatory environment | | | | |
+| Economic environment | | | | |
+| Digital infrastructure/readiness | | | | |
+| Payments/market access | | | | |
+| Overall launch environment | | | | |
+
+If more than one country was selected, build one of these rating rows per
+country (or a combined comparison table like the worked example's), not a
+single blended rating that hides which country drives which risk. Explain
+why a meaningful change in each monitored factor could alter the
+market-entry decision.
+
+OUTPUT RULES
+- Use country subheadings so each country's table, figures, and "so what"
+  statement are clearly separated.
+- Every table cell is either a cited fact or "not found / needs founder
+  research" — never a silent guess.
+- End with a short team-interpretation paragraph per country (and, if
+  multiple countries, one comparative paragraph) stating which evidence most
+  changes the launch decision.</pre>
+            </div>
+          </div>
+
+          <div class="card">
+            <h3>After you run it</h3>
+            <ol>
+              <li>Save the raw output and log it in the AI Use &amp; Founder Decision Log — note anything you had to verify, correct, or find yourself because the AI flagged it as "not found."</li>
+              <li>Turn Task 2's figure data into actual charts — two per country plus the cross-country comparison — using the starter kit's optional script or Excel/Google Sheets. A data table alone does not satisfy "include at least two sourced graphs/figures."</li>
+              <li>Verify the highest-stakes figures yourself (anything that would change whether you launch at all) against the original source before they go in your report.</li>
+              <li>Drop this output straight into Section 4 (Political, Legal, and Economic Environment) of your report, with the figures inserted after each country's table.</li>
+              <li>Move to Step F — the cultural analysis builds on the same selected countries and feeds directly off this step's launch-relevant findings.</li>
+            </ol>
+            <p><strong>Reminder:</strong> this satisfies Part B of Assignment 2 (Section 3.3 of the project guide). Political, legal &amp; economic analysis is worth 14 of 60 points — the largest single criterion in Assignment 2 — plus Start-of-operations requirements worth 6 more.</p>
+          </div>
+        </section>
+
+        <!-- STEP F -->
+        <section class="view" id="view-step-f">
+          <span class="step-num">Assignment 2 · Sections 3.4 &amp; 3.5</span>
+          <h2>Step F — Cultural Analysis &amp; Comparative Table</h2>
+          <p class="lede">The last of Stage 2's three steps: cross-cultural risk, cultural dimensions, language, Hall's high-/low-context typology, the required 11-dimension comparative table, launch implications, and the Stage 2 social-media requirement.</p>
+
+          <div class="card">
+            <h3>Culture is a lens, not a stereotype</h3>
+            <p>The project guide is explicit: "Use cultural frameworks as analytical lenses, not as stereotypes. Country-level tendencies do not describe every individual customer." A cultural-dimension score is a hypothesis about a population's central tendency, not a fact about any one customer you'll actually talk to. The prompt below instructs the AI to treat it that way — don't let your final report strip that caution back out.</p>
+          </div>
+
+          <div class="card">
+            <h3>Get the file</h3>
+            <p>Download the prompt, or scroll down and use the "Copy" button. The same country-context starter kit from Step E has the comparative-table template you'll need here too.</p>
+            <a class="download-btn" href="step-f-cultural-analysis-prompt.md" download>&#8595; Download Step F Cultural Analysis Prompt.md</a>
+          </div>
+
+          <div class="card">
+            <h3>Before you paste this in</h3>
+            <p>Fill in these five fields, then paste the whole block below into your AI tool.</p>
+            <div class="field-list">
+              <div><code>[TEAM NAME / FOUNDER NAMES]</code> — who's asking</div>
+              <div><code>[VENTURE PROFILE]</code> — same profile you used for Steps B, C, D, and E</div>
+              <div><code>[SELECTED COUNTRIES]</code> — the same country or countries from Step D/E</div>
+              <div><code>[STEP E LAUNCH FINDINGS]</code> — a short summary of Step E's "so what" statements and Business Environment Synthesis per country</div>
+              <div><code>[TOOL TYPE]</code> — chat-only is fine, or Claude Code to read your Step E files directly</div>
+            </div>
+          </div>
+
+          <div class="card prompt-card">
+            <h3>The prompt</h3>
+            <div class="prompt-wrap">
+              <button class="copy-btn" data-copy-target="promptTextF">Copy</button>
+              <pre id="promptTextF">Act as our cross-cultural analyst for a three-founder student venture team
+building a born-digital, born-global company for a semester-long
+international business course project (IBA 250, Assignment 2, Step F). This
+step analyzes the cultural environment of the countries our team already
+selected and analyzed in Steps D and E, and translates that evidence into
+concrete launch decisions.
+
+VENTURE CONTEXT
+- Founders: [TEAM NAME / FOUNDER NAMES]
+- Venture profile: [VENTURE PROFILE]
+- Selected countries (from Step D/E): [SELECTED COUNTRIES]
+- Step E's launch-relevant findings so far: [STEP E LAUNCH FINDINGS]
+- My tool type: [TOOL TYPE]
+
+EVIDENCE RULES
+- Use cultural frameworks (cultural-dimensions scores, Hall's high-/
+  low-context typology, and similar) as analytical lenses, not as
+  stereotypes. Country-level tendencies are hypotheses for managerial
+  analysis, not descriptions of every individual customer — say so
+  explicitly wherever you present a cultural-dimension score.
+- Cite the specific source and model/year for every cultural-dimension score
+  or classification (e.g., the official Hofstede Insights country-comparison
+  tool, accessed on a stated date). Never invent or estimate a score — if you
+  cannot find or verify one, write "not found / needs founder research."
+- Do not select or rank countries — Steps D and E already did that. This
+  step analyzes the countries already chosen.
+
+TASK 1 — Cultural-environment analysis
+For EACH selected country, produce this table:
+
+| Element | Country findings (with sources) | Implications for our firm |
+|---|---|---|
+| Cross-cultural risk situations | | |
+| Cultural dimensions scores (vs. U.S.) | | |
+| Language(s) & business language norms | | |
+| Hall's typology: high- or low-context? | | |
+
+After each country's table, add a short "Founder decision" paragraph naming
+the 2-4 cultural differences that actually warrant a concrete product,
+marketing, or support action — and explicitly naming which differences you
+are choosing NOT to act on yet because there isn't enough evidence to justify
+a change (do not treat every listed difference as automatically actionable).
+
+TASK 2 — Comparative cultural attributes table
+For EACH selected country, produce this required 11-dimension table against
+the United States:
+
+| Dimension | [Country] | United States | Implication for our firm |
+|---|---|---|---|
+| Role of context | | | |
+| Individualism versus collectivism | | | |
+| Time orientation | | | |
+| Space perceptions | | | |
+| Religion | | | |
+| Language | | | |
+| Negotiations | | | |
+| Business relations | | | |
+| Business meetings | | | |
+| Superior-subordinate relations | | | |
+| Style of dress in business | | | |
+
+After each country's table, add a short team-interpretation paragraph
+identifying the two or three cultural differences most likely to change
+product design, marketing communication, customer support, partnerships, or
+selling behavior for THIS venture specifically.
+
+TASK 3 — Launch implications
+Build one table translating Tasks 1-2 above, plus the Step E findings
+provided, into concrete per-country launch decisions:
+
+| Decision area | [Country 1] | [Country 2 if applicable] |
+|---|---|---|
+| Product | | |
+| Pricing | | |
+| Payments | | |
+| Communication | | |
+| Support | | |
+| Privacy / compliance | | |
+| Partners | | |
+
+OUTPUT RULES
+- Never present a national cultural score as a fact about an individual
+  customer — keep the hypothesis framing throughout.
+- Every table cell is either a cited fact, a clearly labeled hypothesis to
+  test, or "not found / needs founder research" — never a silent guess.
+- End with one sentence naming the single AI-generated cultural
+  generalization in this output that the founders should verify, qualify, or
+  reject before it goes in the report — pick the one you are least confident
+  in, not a safe one.</pre>
+            </div>
+          </div>
+
+          <div class="card">
+            <h3>After you run it</h3>
+            <ol>
+              <li>Save the raw output and log it in the AI Use &amp; Founder Decision Log — verify at least one cultural-dimension score yourself against the original source before it goes in your report.</li>
+              <li>Drop Tasks 1-2 into Section 5 (Cultural Environment) of your report, including the required comparative cultural attributes table.</li>
+              <li>Drop Task 3 into Section 6 (Launch Implications).</li>
+              <li>Write Section 7 (AI Use, Verification, and Founder Judgment): name at least one thing the AI proposed that your team verified, challenged, or changed — the closing sentence from Task 3 is a good place to start.</li>
+              <li>Now that Steps D, E, and F are all done, finish Section 1 (Executive Decision Summary) — state the selected countries, entry mode, and the three most important reasons behind the decision.</li>
+              <li>Publish the six required Stage 2 social-media videos (2 per founder, faces visible) and include the links in your report. Content ideas: why you selected these countries and deferred another; a graph/indicator that changed your entry decision; why digital exporting fits; one cross-cultural difference affecting product/communication design; a founder test of the same marketing message in two cultural contexts; and the AI-generated cultural generalization you had to verify, qualify, or reject.</li>
+            </ol>
+            <p><strong>Reminder:</strong> this satisfies Parts C and D of Assignment 2 (Sections 3.4 and 3.5 of the project guide). Cultural analysis is worth 14 of 60 points, the comparative table 4 more, and social media &amp; videos 4 more — 22 of 60 combined.</p>
+          </div>
         </section>
 
         <section class="view" id="view-stage-3">
@@ -1041,8 +1487,8 @@ OUTPUT RULES
 
         <!-- WORKED EXAMPLE -->
         <section class="view" id="view-worked-example">
-          <span class="step-num">Reference</span>
-          <h2>Worked Example — PitchBridge AI</h2>
+          <span class="step-num">Reference · Stage 1</span>
+          <h2>Worked Example — PitchBridge AI (Stage 1)</h2>
           <p class="lede">A real run-through of Steps A and B, done by your professor as a practice company called PitchBridge AI, so you can see what finished output actually looks like before you produce your own. Nothing here is a template to copy — your ideas, countries, and numbers will be different.</p>
 
           <div class="card">
@@ -1079,6 +1525,39 @@ OUTPUT RULES
           <div class="card">
             <h3>What this worked example is trying to show you</h3>
             <p>The point isn't the ranking — it's that a careful AI run cites everything, shows its arithmetic, and actively argues against trusting its own weakest assumptions. If your own Step A or Step B output doesn't do that (real sources, dated evidence, explicit "here's what's shaky about this" flags), that's a sign to push your AI tool harder, not a sign to accept what it gave you.</p>
+          </div>
+        </section>
+
+        <!-- WORKED EXAMPLE STAGE 2 -->
+        <section class="view" id="view-worked-example-stage-2">
+          <span class="step-num">Reference · Stage 2</span>
+          <h2>Worked Example — PitchBridge AI Selects Brazil and Indonesia</h2>
+          <p class="lede">The Assignment 2 worked example from the project guide, reproduced in full: entry mode decision, political/legal/economic analysis for Brazil and Indonesia, cultural analysis and comparative tables, and launch implications. Quantitative values are illustrative placeholders unless a current source is explicitly verified — your report must use current, dated values from your own research.</p>
+
+          <div class="card">
+            <h3>Get the file</h3>
+            <p>Download the full worked example — it follows the exact headings from the Assignment 2 written report template, so you can see what a complete Section 2-6 looks like before you write your own.</p>
+            <a class="download-btn" href="worked-example-pitchbridgeai-stage-2.md" download>&#8595; Download the full Stage 2 worked example</a>
+          </div>
+
+          <div class="card">
+            <h3>Entry mode: direct digital exporting, with reasons</h3>
+            <p>PitchBridge AI selects Brazil and Indonesia — both carried forward from the Stage 1 shortlist — and chooses <strong>direct digital exporting</strong> from the United States. Not because the product happens to be digital, but because the entry-mode table's own logic points there: high control needs over the AI engine, brand, and user data; real uncertainty and limited founder capital pushing toward a low-commitment, reversible entry; and dissemination risk (the prompt logic and coaching workflow are the core differentiator) that argues against licensing it to a partner. Mexico, the third Stage 1 finalist, is deferred rather than rejected — the team narrows to two markets on purpose, to compare genuinely different institutional and cultural conditions.</p>
+          </div>
+
+          <div class="card">
+            <h3>Political/legal/economic: numbers that actually drive a decision</h3>
+            <p>Each country gets the full required ten-row table — governance scores, rule of law, the specific privacy law (Brazil's LGPD, Indonesia's PDP Law), GDP and inflation, internet penetration, the dominant local payment rail (Pix in Brazil, QRIS in Indonesia), and a digital-services tax note — every cell sourced and dated. The comparative table that follows doesn't just restate the two countries side by side; it rates each on a 1-5 scale with the evidence that justifies the rating, and ends in three explicit monitoring triggers the founders will actually watch (an FX/inflation move of roughly 10%, any verified privacy/tax rule change, and any payment-provider eligibility change) — tying this step directly back to the Step B monitoring Skill instead of treating Assignment 2 as a one-time snapshot.</p>
+          </div>
+
+          <div class="card">
+            <h3>Culture: hypotheses to test, not facts about customers</h3>
+            <p>The cultural analysis cites real Hofstede dimension scores (Brazil and Indonesia each compared to the U.S. baseline) and Hall's context typology, but it's explicit at every step that a national score is a managerial hypothesis, not a description of any individual user. The founder-decision paragraphs are where this matters most: for Brazil, the team prioritizes Portuguese language, authority/hierarchy cues, and relational framing — and explicitly declines to adapt dress or spatial norms without actual evidence from target users. The AI's own first-draft recommendation (one English-language launch, since many startup users can operate in English) is the one the founders overturned after the cultural analysis — logged openly in Section 7 rather than quietly revised away.</p>
+          </div>
+
+          <div class="card">
+            <h3>What this worked example is trying to show you</h3>
+            <p>Notice what it does <em>not</em> do: it never hands you a clean verdict like "Brazil is better than Indonesia." It hands you evidence, ratings with stated reasoning, and a monitoring plan, then leaves the launch call explicitly to the founders. If your own Step D/E/F output doesn't show that same combination — real sourced numbers, a stated monitoring plan, and at least one AI recommendation your team overruled — that's a sign to push your AI tool harder, not a sign to accept what it gave you.</p>
           </div>
         </section>
 
@@ -1166,7 +1645,7 @@ OUTPUT RULES
   });
 
   // ---- Footer date ----
-  document.getElementById("lastUpdated").textContent = new Date("2026-08-21").toLocaleDateString(
+  document.getElementById("lastUpdated").textContent = new Date("2026-10-14").toLocaleDateString(
     "en-US", { year: "numeric", month: "long", day: "numeric" }
   );
 </script>

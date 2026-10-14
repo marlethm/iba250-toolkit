@@ -36,8 +36,12 @@ matches the project guide's six required tasks and the report template exactly.
   Task 1 needs your team's actual situation — the AI cannot know this on its own.
 - `[STEP B SCORECARD RESULTS]` — paste your most recent Step B Skill run's
   evidence table and ranked scorecard (from `runs/<date>-output.md` or
-  equivalent). If you haven't done Step B yet, do that first — Task 3 below
-  builds directly on it instead of re-doing the screening from scratch.
+  equivalent) — the actual most recent one, not a summary you're recalling
+  from memory or from an earlier run. If you're running this in Claude Code
+  with your project folder open, it's fine to say so instead and let the AI
+  check the `skills/market-intel/runs/` folder itself for the latest dated
+  run. If you haven't done Step B yet, do that first — Task 3 below builds
+  directly on it instead of re-doing the screening from scratch.
 - `[PRICING / MONETIZATION ASSUMPTIONS]` — your best current thinking on price
   point(s) and how you'd monetize (subscription, freemium, per-transaction,
   etc.). If you don't have this yet, say so — the AI will propose a starting
@@ -109,7 +113,20 @@ from the table.
 
 TASK 3 — Screen countries to identify target markets
 Do NOT re-screen the countries from scratch. Reconcile and build on the
-pasted Step B scorecard results above:
+pasted Step B scorecard results above — but first check for drift:
+- If you have file access to this project (e.g., Claude Code with the
+  skills/market-intel/ folder open) and a more recent dated run exists under
+  skills/market-intel/runs/ than the one pasted above, use that most recent
+  run instead, and say plainly that you did so and which dates are involved.
+- Compare the indicators actually used (in the pasted results, or the most
+  recent run file) against skills/market-intel/SKILL.md's Locked indicator
+  list, if one exists. If they don't match — for example, the pasted or
+  most-recent run used a different underlying indicator for a criterion than
+  what SKILL.md currently has locked — flag this explicitly as
+  "METHODOLOGY-DRIFT," separate from and more serious than ordinary
+  staleness, because it means the ranking is not directly comparable across
+  runs. Recommend re-running the Step B Skill under the currently locked
+  indicators before trusting the shortlist.
 - Reproduce the ranked scorecard (all 7 required criteria: market size &
   growth, market intensity, consumption capacity, receptivity to imports,
   infrastructure, economic freedom, country risk — plus any venture-specific

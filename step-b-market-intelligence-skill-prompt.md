@@ -182,6 +182,10 @@ literal governing instructions:
   6. Change since prior run — compare this run's evidence table to the most
      recent entry in logs/change_log.md (or state "first run" if none
      exists), and flag only changes that could plausibly move the ranking.
+     Also confirm every indicator you used this run matches the Locked
+     indicator list below; if any differs, flag it explicitly as
+     "METHODOLOGY CHANGE" (not an ordinary data update) and explain why
+     before showing any resulting score change.
   7. Founder decision — leave this field BLANK. It is filled in by the
      founders, never by the AI.
 
@@ -194,6 +198,28 @@ literal governing instructions:
   Founder decision rule: recommend, do not decide. Never select a top market
   for the founders. End every run by prompting them to fill in the Founder
   decision log.
+
+  Locked indicator list: on the first real run, choose one specific, named
+  indicator per criterion (e.g., "GDP, current US$, World Bank" or "GDP
+  growth rate, annual %, World Bank" for Market size & growth — not a vague
+  proxy like population alone) and record all seven, plus any
+  venture-specific criteria, in this list:
+  1. Market size & growth rate — indicator: [blank until first run]
+  2. Market intensity (buying power) — indicator: [blank until first run]
+  3. Consumption capacity — indicator: [blank until first run]
+  4. Receptivity to imports — indicator: [blank until first run]
+  5. Infrastructure for doing business — indicator: [blank until first run]
+  6. Degree of economic freedom — indicator: [blank until first run]
+  7. Country risk — indicator: [blank until first run]
+  [any venture-specific criteria] — indicator: [blank until first run]
+
+  Indicator consistency rule: every run after the first must reuse these
+  exact named indicators — never substitute a different one, even a better
+  one, without saying so. Swapping indicators is a METHODOLOGY CHANGE, not a
+  routine data update. If you believe a locked indicator should change, say
+  so under "Recommended next action," label it "METHODOLOGY CHANGE — needs
+  founder approval," and wait for the founders to approve it and update this
+  list themselves before you use it.
 
 AFTER YOU BUILD IT
 Explain in 3-5 sentences how to actually re-run this Skill for a new
@@ -212,18 +238,25 @@ to do a new dated monitoring run):
 Using skills/market-intel/SKILL.md as the governing instructions, run a real
 monitoring pass now — do not just describe how to do this, actually do it.
 
-1. Fetch current, sourced evidence for every candidate country from the
-   permitted public/open sources (search and fetch them live).
-2. If I've pasted in any paywalled library-database data in this
+1. Check SKILL.md's Locked indicator list. If this is truly the first run
+   and it's still blank, choose one specific, named indicator per criterion
+   now and fill in that list in SKILL.md before proceeding. If it's already
+   filled in from an earlier run, reuse those exact same indicators — do not
+   pick different or "better" ones on your own.
+2. Fetch current, sourced evidence for every candidate country, for those
+   exact locked indicators, from the permitted public/open sources (search
+   and fetch them live).
+3. If I've pasted in any paywalled library-database data in this
    conversation, incorporate it too.
-3. Save this run's evidence table and scorecard as new dated files under
+4. Save this run's evidence table and scorecard as new dated files under
    skills/market-intel/runs/ (e.g., runs/<YYYY-MM-DD>-evidence-table.csv and
    runs/<YYYY-MM-DD>-scorecard.csv), following the templates.
-4. Show me the full seven-block output in your response, exactly as
+5. Show me the full seven-block output in your response, exactly as
    SKILL.md's "Required output structure" specifies — evidence snapshot,
    screening score with arithmetic shown, opportunity interpretation,
-   risks/unknowns, recommended next action, change since prior run, and a
-   blank founder decision field for us to fill in.
+   risks/unknowns, recommended next action, change since prior run (including
+   the indicator-consistency check), and a blank founder decision field for
+   us to fill in.
 ```
 
 If you have paywalled library-database figures (Statista, Euromonitor
